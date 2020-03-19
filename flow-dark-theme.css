@@ -1,0 +1,23 @@
+#root.root--basic-dark-theme{
+	--bg: red; /* this one is defined in basic styles */
+	--editor-blue: cyan;
+	--editor-copy: magenta;
+	--editor-class: orange;
+}
+
+.header{
+}
+
+
+/* Editor classes */
+.root--basic-dark-theme .mtk6{
+
+}
+
+.root--basic-dark-theme .mtk22{
+
+}
+
+.root--basic-dark-theme .monaco-editor .line-numbers{
+
+}
