@@ -1,23 +1,34 @@
-#root.root--basic-dark-theme{
-	--bg: red; /* this one is defined in basic styles */
-	--editor-blue: cyan;
-	--editor-copy: magenta;
-	--editor-class: orange;
+.basic-dark-theme {
+  --theme-header-bg: #333;
+  --theme-sidebar-bg: #444;
+  --theme-editor-bg: #555;
+  --theme-code-margin-bg: #ffe160;
+  --theme-editor-blue: cyan;
+  --theme-editor-copy: magenta;
+  --theme-editor-class: orange;
+  --theme-line-numbers: #555;
 }
 
-.header{
+.with-theme .header {
+  background: var(--theme-header-bg);
+}
+.with-theme .sidebar {
+  background: var(--theme-sidebar-bg);
+}
+.with-theme .main {
+  background: var(--theme-editor-bg);
+}
+.with-theme .mtk6 {
+  color: blue;
+}
+.with-theme .mtk22 {
+  color: red;
+}
+.with-theme .monaco-editor .line-numbers {
+  color: var(--theme-line-numbers);
+}
+.with-theme .monaco-editor .margin {
+  background-color: var(--theme-code-margin-bg);
 }
 
-
-/* Editor classes */
-.root--basic-dark-theme .mtk6{
-
-}
-
-.root--basic-dark-theme .mtk22{
-
-}
-
-.root--basic-dark-theme .monaco-editor .line-numbers{
-
-}
+/*# sourceMappingURL=flow-dark-theme.css.map */

@@ -1,0 +1,183 @@
+/*
+  This theme is based on Ariake Dark for Visual Studio Code
+  https://marketplace.visualstudio.com/items?itemName=wart.ariake-dark
+*/
+.basic-dark-theme {
+  --white: #bdc4f4;
+  --bright-white: #d0d7f4;
+  --bright-green: #23d299;
+  --bright-pink: #df86f6;
+  --yellow: #ffc107;
+
+  --theme-header-bg: #25272f;
+  --theme-header-title: var(--white);
+
+  --theme-sidebar-bg: #1c1f26;
+  --theme-sidebar-selection: #31374a;
+  --theme-editor-bg: #2a2d37;
+  --theme-code-margin-bg: #303442;
+
+  --theme-editor-cursor: var(--bright-white);
+  --theme-editor-code-main: var(--white);
+  --theme-editor-selection-focused: rgba(44, 110, 208, 0.35);
+  --theme-editor-selection: rgba(44, 110, 208, 0.25);
+  --theme-editor-code-class: var(--bright-green);
+  --theme-editor-code-resource: var(--bright-pink);
+  --theme-editor-code-comments: #636776;
+  --theme-editor-code-block: #3f4454;
+  --theme-editor-line-numbers: #57669b;
+
+  --theme-deployment-result: var(--yellow);
+  --theme-deployed-resources: var(--bright-pink);
+}
+
+.with-theme {
+  .main-grid {
+    background: var(--theme-header-bg);
+  }
+
+  .header {
+    background: var(--theme-header-bg);
+  }
+
+  .header-icon {
+    color: var(--white);
+    cursor: pointer;
+    &:hover {
+      background-color: var(--theme-code-margin-bg);
+    }
+  }
+
+  .header-title {
+    color: var(--theme-header-title);
+  }
+
+  .sidebar {
+    background: var(--theme-sidebar-bg);
+
+    & .css-xjbdkn {
+      color: var(--bright-green);
+      background-color: var(--theme-sidebar-selection);
+      & input {
+        color: var(--bright-green);
+      }
+    }
+
+    & .css-p4qr03 {
+      color: #6a728e;
+      background-color: var(--theme-editor-bg);
+      & input {
+        color: #6a728e;
+      }
+    }
+  }
+
+  .css-1ogaoz {
+    cursor: pointer;
+    &:hover {
+      background-color: var(--theme-code-margin-bg);
+    }
+  }
+
+  .css-3wfqfb:before {
+    display: none;
+  }
+
+  .main {
+    background: var(--theme-editor-bg);
+  }
+
+  /* Main code*/
+  .mtk1 {
+    color: var(--theme-editor-code-main);
+  }
+
+  /* Code parts classes*/
+  .mtk6 {
+    color: var(--theme-editor-code-class);
+  }
+
+  /* Comments */
+  .mtk8 {
+    color: var(--theme-editor-code-comments);
+  }
+
+  /* Resource/Type Name*/
+  .mtk22 {
+    color: var(--theme-editor-code-resource);
+  }
+
+  .monaco-editor {
+    .line-numbers {
+      color: var(--theme-editor-line-numbers);
+    }
+
+    .margin {
+      background-color: var(--theme-code-margin-bg);
+    }
+
+    .lines-content {
+      background-color: var(--theme-editor-bg);
+      & .cigr {
+        box-shadow: inset 1px 0 0 var(--theme-editor-code-block);
+      }
+
+      & .cigra {
+        box-shadow: inset 1px 0 0 var(--theme-editor-code-class);
+      }
+    }
+
+    .scroll-decoration {
+      box-shadow: inset 0 6px 6px -6px rgba(0, 0, 0, 0.25);
+    }
+
+    .codicon-chevron-right,
+    .codicon-chevron-down {
+      color: var(--theme-editor-line-numbers);
+    }
+
+    .view-overlays .current-line {
+      border: none;
+      background-color: #31374a;
+    }
+
+    .focused .selected-text {
+      background-color: var(--theme-editor-selection-focused);
+    }
+
+    .selected-text {
+      background-color: var(--theme-editor-selection);
+    }
+
+    .cursor {
+      background-color: var(--theme-editor-cursor);
+      border-color: var(--theme-editor-cursor);
+      color: var(--theme-sidebar-bg);
+    }
+  }
+
+  /* Deployed resources */
+  .css-t2kxtv {
+    color: var(--theme-deployment-result);
+  }
+
+  .css-qeegv1 {
+    color: var(--theme-deployed-resources);
+  }
+
+  .css-h90thf,
+  .css-169vnk6 {
+    border-color: var(--theme-header-bg) !important;
+  }
+
+  .css-169vnk6 > div:nth-child(1),
+  .resources-log {
+    border-right: 1px solid var(--theme-header-bg) !important;
+  }
+
+  .css-169vnk6 > div:nth-child(2),
+  .right-log {
+    background-color: var(--theme-editor-bg) !important;
+    color: var(--white);
+  }
+}
