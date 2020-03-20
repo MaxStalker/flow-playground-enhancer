@@ -17,3 +17,4 @@ You can adjust colors in flow-dark-theme.css file located in `release` folder. M
 ## Known issues and Caveats
  - Due to the nature of generated CSS class names, it's quite possible that extension will stop working properly with next release of Playground.
  - Scrollbars in sidebar area are not styled
+ - Code suggestion tooltip and accessibility features are not covered (though might work) 
