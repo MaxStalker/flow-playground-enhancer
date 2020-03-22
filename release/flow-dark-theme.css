@@ -178,7 +178,7 @@
 }
 .switch-dot--active {
   background-color: #00ff76;
-  transform: translateX(28px);
+  transform: translateX(24px);
 }
 
 .switch-label {
