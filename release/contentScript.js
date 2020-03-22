@@ -9,7 +9,8 @@ const classMap = {
   uiCodeLog: ".css-169vnk6",
   uiHeaderIcons: ".css-4a84um",
   uiHeaderLogo: ".css-zkfaav",
-  uiHeaderTitle: ".css-1dnh3is"
+  uiHeaderTitle: ".css-1dnh3is",
+  uiHeaderRightPart: '.css-4cffwv'
   /*
   editorBlue: ".mtk6",
   editorCopy: ".mtk1",
@@ -25,6 +26,45 @@ const watcher = setInterval(() => {
   }
 }, 1000);
 
+function injectSwitcher(classMap){
+  const rightPart = document.querySelector(classMap.uiHeaderRightPart);
+
+  const container = document.createElement('div');
+  container.classList.add('switch-container');
+
+  const control = document.createElement('div');
+  control.classList.add('switch-control');
+
+  const dot = document.createElement('div');
+  dot.classList.add('switch-dot');
+
+  const label = document.createElement('div');
+  label.textContent = "Dark Mode";
+  label.classList.add('switch-label');
+
+  control.appendChild(dot);
+  container.appendChild(control);
+  container.appendChild(label);
+
+  const dotControl = container.querySelector(".switch-dot");
+  const labelControl = container.querySelector(".switch-label");
+  rightPart.prepend(container);
+
+  const root = document.getElementById("root");
+
+  control.addEventListener("click", event => {
+    if (
+      event.target.classList.contains("switch-control") ||
+      event.target.classList.contains("switch-dot")
+    ) {
+      dotControl.classList.toggle("switch-dot--active");
+      labelControl.classList.toggle("switch-label--active");
+      root.classList.toggle("with-theme");
+    }
+  });
+
+}
+
 function init(themeName, classMap) {
   const {
     uiHeader,
@@ -37,8 +77,10 @@ function init(themeName, classMap) {
     uiCodeLog
   } = classMap;
 
+  injectSwitcher(classMap);
+
   const root = document.getElementById("root");
-  root.classList.add("with-theme");
+  // root.classList.add("with-theme");
   root.classList.add(`${themeName}`);
 
   const mainGrid = document.querySelector(uiGrid);

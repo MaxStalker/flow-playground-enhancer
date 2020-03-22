@@ -21,14 +21,17 @@ setTimeout(()=>{
   }, 1000);
 },2000);
 
+function injectSwitcher(){
+  const rightPart = document.querySelector('.css-4cffwv');
+
+
+}
+
 function init(themeName, classMap) {
   const {
     uiHeader,
     uiSidebar,
     uiMain,
-    editorBlue,
-    editorCopy,
-    editorClass
   } = classMap;
 
   const root = document.getElementById("root");
