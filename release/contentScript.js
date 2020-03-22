@@ -10,7 +10,7 @@ const classMap = {
   uiHeaderIcons: ".css-4a84um",
   uiHeaderLogo: ".css-zkfaav",
   uiHeaderTitle: ".css-1dnh3is",
-  uiHeaderRightPart: '.css-4cffwv'
+  uiHeaderRightPart: ".css-4cffwv"
   /*
   editorBlue: ".mtk6",
   editorCopy: ".mtk1",
@@ -26,21 +26,29 @@ const watcher = setInterval(() => {
   }
 }, 1000);
 
-function injectSwitcher(classMap){
+function getTheme(callback) {
+  chrome.runtime.sendMessage({ msg: "get-theme" }, callback);
+}
+
+function setTheme(theme) {
+  chrome.runtime.sendMessage({ msg: "store-theme-selection", theme });
+}
+
+function injectSwitcher(classMap) {
   const rightPart = document.querySelector(classMap.uiHeaderRightPart);
 
-  const container = document.createElement('div');
-  container.classList.add('switch-container');
+  const container = document.createElement("div");
+  container.classList.add("switch-container");
 
-  const control = document.createElement('div');
-  control.classList.add('switch-control');
+  const control = document.createElement("div");
+  control.classList.add("switch-control");
 
-  const dot = document.createElement('div');
-  dot.classList.add('switch-dot');
+  const dot = document.createElement("div");
+  dot.classList.add("switch-dot");
 
-  const label = document.createElement('div');
+  const label = document.createElement("div");
   label.textContent = "Dark Mode";
-  label.classList.add('switch-label');
+  label.classList.add("switch-label");
 
   control.appendChild(dot);
   container.appendChild(control);
@@ -60,6 +68,21 @@ function injectSwitcher(classMap){
       dotControl.classList.toggle("switch-dot--active");
       labelControl.classList.toggle("switch-label--active");
       root.classList.toggle("with-theme");
+
+      if (root.classList.contains("with-theme")) {
+        setTheme("dark");
+      } else {
+        setTheme("light");
+      }
+    }
+  });
+
+  chrome.runtime.sendMessage({ msg: "get-theme" }, (data)=> {
+    console.log('some data here', data);
+    if (data.flowTheme === "dark") {
+      root.classList.add("with-theme");
+      dotControl.classList.add("switch-dot--active");
+      labelControl.classList.add("switch-label--active");
     }
   });
 
@@ -109,8 +132,8 @@ function init(themeName, classMap) {
   title.classList.add("header-title");
 
   const [leftLog, rightLog] = document.querySelectorAll(`${uiCodeLog} > div`);
-  leftLog.classList.add('resources-log');
-  rightLog.classList.add('right-log');
+  leftLog.classList.add("resources-log");
+  rightLog.classList.add("right-log");
 
   log("Class names are injected");
 }
