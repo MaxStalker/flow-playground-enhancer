@@ -1,34 +1,192 @@
+/*
+  This theme is based on Ariake Dark for Visual Studio Code
+  https://marketplace.visualstudio.com/items?itemName=wart.ariake-dark
+*/
 .basic-dark-theme {
-  --theme-header-bg: #333;
-  --theme-sidebar-bg: #444;
-  --theme-editor-bg: #555;
-  --theme-code-margin-bg: #ffe160;
-  --theme-editor-blue: cyan;
-  --theme-editor-copy: magenta;
-  --theme-editor-class: orange;
-  --theme-line-numbers: #555;
+  --white: #bdc4f4;
+  --bright-white: #d0d7f4;
+  --bright-green: #23d299;
+  --bright-pink: #df86f6;
+  --yellow: #ffc107;
+  --theme-header-bg: #25272f;
+  --theme-header-title: var(--white);
+  --theme-sidebar-bg: #1c1f26;
+  --theme-sidebar-selection: #31374a;
+  --theme-editor-bg: #2a2d37;
+  --theme-code-margin-bg: #303442;
+  --theme-editor-cursor: var(--bright-white);
+  --theme-editor-code-main: var(--white);
+  --theme-editor-selection-focused: rgba(44, 110, 208, 0.35);
+  --theme-editor-selection: rgba(44, 110, 208, 0.25);
+  --theme-editor-code-class: var(--bright-green);
+  --theme-editor-code-resource: var(--bright-pink);
+  --theme-editor-code-comments: #636776;
+  --theme-editor-code-block: #3f4454;
+  --theme-editor-line-numbers: #57669b;
+  --theme-deployment-result: var(--yellow);
+  --theme-deployed-resources: var(--bright-pink);
 }
 
+.with-theme {
+  /* Main code*/
+  /* Code parts classes*/
+  /* Comments */
+  /* Resource/Type Name*/
+  /* Deployed resources */
+}
+.with-theme .main-grid {
+  background: var(--theme-header-bg);
+}
 .with-theme .header {
   background: var(--theme-header-bg);
+}
+.with-theme .header-icon {
+  color: var(--white);
+  cursor: pointer;
+}
+.with-theme .header-icon:hover {
+  background-color: var(--theme-code-margin-bg);
+}
+.with-theme .header-title {
+  color: var(--theme-header-title);
 }
 .with-theme .sidebar {
   background: var(--theme-sidebar-bg);
 }
+.with-theme .sidebar .css-xjbdkn {
+  color: var(--bright-green);
+  background-color: var(--theme-sidebar-selection);
+}
+.with-theme .sidebar .css-xjbdkn input {
+  color: var(--bright-green);
+}
+.with-theme .sidebar .css-p4qr03 {
+  color: #6a728e;
+  background-color: var(--theme-editor-bg);
+}
+.with-theme .sidebar .css-p4qr03 input {
+  color: #6a728e;
+}
+.with-theme .css-1ogaoz {
+  cursor: pointer;
+}
+.with-theme .css-1ogaoz:hover {
+  background-color: var(--theme-code-margin-bg);
+}
+.with-theme .css-3wfqfb:before {
+  display: none;
+}
 .with-theme .main {
   background: var(--theme-editor-bg);
 }
+.with-theme .mtk1 {
+  color: var(--theme-editor-code-main);
+}
 .with-theme .mtk6 {
-  color: blue;
+  color: var(--theme-editor-code-class);
+}
+.with-theme .mtk8 {
+  color: var(--theme-editor-code-comments);
 }
 .with-theme .mtk22 {
-  color: red;
+  color: var(--theme-editor-code-resource);
 }
 .with-theme .monaco-editor .line-numbers {
-  color: var(--theme-line-numbers);
+  color: var(--theme-editor-line-numbers);
 }
 .with-theme .monaco-editor .margin {
   background-color: var(--theme-code-margin-bg);
+}
+.with-theme .monaco-editor .lines-content {
+  background-color: var(--theme-editor-bg);
+}
+.with-theme .monaco-editor .lines-content .cigr {
+  box-shadow: inset 1px 0 0 var(--theme-editor-code-block);
+}
+.with-theme .monaco-editor .lines-content .cigra {
+  box-shadow: inset 1px 0 0 var(--theme-editor-code-class);
+}
+.with-theme .monaco-editor .scroll-decoration {
+  box-shadow: inset 0 6px 6px -6px rgba(0, 0, 0, 0.25);
+}
+.with-theme .monaco-editor .codicon-chevron-right,
+.with-theme .monaco-editor .codicon-chevron-down {
+  color: var(--theme-editor-line-numbers);
+}
+.with-theme .monaco-editor .view-overlays .current-line {
+  border: none;
+  background-color: #31374a;
+}
+.with-theme .monaco-editor .focused .selected-text {
+  background-color: var(--theme-editor-selection-focused);
+}
+.with-theme .monaco-editor .selected-text {
+  background-color: var(--theme-editor-selection);
+}
+.with-theme .monaco-editor .cursor {
+  background-color: var(--theme-editor-cursor);
+  border-color: var(--theme-editor-cursor);
+  color: var(--theme-sidebar-bg);
+}
+.with-theme .css-t2kxtv {
+  color: var(--theme-deployment-result);
+}
+.with-theme .css-qeegv1 {
+  color: var(--theme-deployed-resources);
+}
+.with-theme .css-h90thf,
+.with-theme .css-169vnk6 {
+  border-color: var(--theme-header-bg) !important;
+}
+.with-theme .css-169vnk6 > div:nth-child(1),
+.with-theme .resources-log {
+  border-right: 1px solid var(--theme-header-bg) !important;
+}
+.with-theme .css-169vnk6 > div:nth-child(2),
+.with-theme .right-log {
+  background-color: var(--theme-editor-bg) !important;
+  color: var(--white);
+}
+
+/* Switch styles */
+.switch-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.switch-control {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: #3a3c46;
+  padding: 0 2px;
+  border-radius: 24px;
+  width: 48px;
+  height: 24px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.switch-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #bdc4f4;
+  border-radius: 20px;
+  transition: all 0.15s ease-in-out;
+  transform: translateX(0);
+}
+.switch-dot--active {
+  background-color: #00ff76;
+  transform: translateX(28px);
+}
+
+.switch-label {
+  color: #222;
+  font-family: Overpass, sans-serif;
+}
+.switch-label--active {
+  color: #00ff76;
 }
 
 /*# sourceMappingURL=flow-dark-theme.css.map */
