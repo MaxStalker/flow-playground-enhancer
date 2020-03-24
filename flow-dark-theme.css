@@ -3,6 +3,7 @@
   https://marketplace.visualstudio.com/items?itemName=wart.ariake-dark
 */
 .basic-dark-theme {
+  --test: red;
   --white: #bdc4f4;
   --bright-white: #d0d7f4;
   --bright-green: #23d299;
@@ -153,7 +154,7 @@
   display: flex;
   align-items: center;
   margin-left: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
   border-left: 1px solid rgba(0, 0, 0, 0.3);
 }
 .with-theme .switch-container {
@@ -204,7 +205,6 @@
 .css-169vnk6.code-log-container {
   display: grid;
   grid-template-columns: 30% 70%;
-  max-height: 200px;
 }
 
 .right-log {

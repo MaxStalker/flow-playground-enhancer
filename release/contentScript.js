@@ -56,7 +56,7 @@ function injectSwitcher(classMap) {
 
   const dotControl = container.querySelector(".switch-dot");
   const labelControl = container.querySelector(".switch-label");
-  rightPart.prepend(container);
+  rightPart.append(container);
 
   const root = document.getElementById("root");
 
@@ -130,6 +130,9 @@ function init(themeName, classMap) {
 
   const title = document.querySelector(uiHeaderTitle);
   title.classList.add("header-title");
+
+  const uiCodeLogContainer = document.querySelector(uiCodeLog);
+  uiCodeLogContainer.classList.add('code-log-container');
 
   const [leftLog, rightLog] = document.querySelectorAll(`${uiCodeLog} > div`);
   leftLog.classList.add("resources-log");
