@@ -88,10 +88,6 @@ function injectSwitcher(classMap) {
 
 }
 
-
-// TODO: Make .css-1ugz9jq - resource detachable
-//
-
 let isDown = false
 let draggingEnabled = true;
 let dragBlock = null;
