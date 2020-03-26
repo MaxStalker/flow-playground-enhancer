@@ -88,6 +88,61 @@ function injectSwitcher(classMap) {
 
 }
 
+
+// TODO: Make .css-1ugz9jq - resource detachable
+//
+
+let isDown = false
+let draggingEnabled = true;
+let dragBlock = null;
+const drag = (e) => {
+  isDown = true;
+  if (draggingEnabled){
+    offset = [
+      dragBlock.offsetLeft - e.clientX,
+      dragBlock.offsetTop - e.clientY
+    ];
+  }
+}
+const move = (event) => {
+  event.preventDefault();
+  if (isDown && draggingEnabled) {
+    mousePosition = {
+      x : event.clientX,
+      y : event.clientY
+
+    };
+    dragBlock.style.left = (mousePosition.x + offset[0]) + 'px';
+    dragBlock.style.top  = (mousePosition.y + offset[1]) + 'px';
+  }
+}
+document.addEventListener('mouseup', function() {
+  isDown = false;
+}, true);
+
+function upgradeTransactionLog(){
+  document.addEventListener('click', (event)=>{
+    const parentNode = document.querySelector('.css-pmwm6j .css-h83z3o');
+    if (event.target === parentNode){
+      const logBlock = document.querySelector(".css-pmwm6j .css-1ugz9jq");
+      logBlock.classList.toggle("detached");
+      draggingEnabled = logBlock.classList.contains("detached")
+      if (draggingEnabled){
+        dragBlock = logBlock;
+        logBlock.addEventListener('mousedown', drag , true);
+        document.addEventListener('mousemove', move, true);
+      } else {
+        dragBlock = null
+        logBlock.removeEventListener('mousedown', drag);
+        document.removeEventListener('mousemove', move);
+      }
+    }
+  })
+
+
+  console.log('transaction log updated');
+}
+
 function init(themeName, classMap) {
   const {
     uiHeader,
@@ -139,4 +194,6 @@ function init(themeName, classMap) {
   rightLog.classList.add("right-log");
 
   log("Class names are injected");
+
+  upgradeTransactionLog();
 }

@@ -252,3 +252,19 @@
 .right-log{
   width: 100% !important;
 }
+
+.css-1ugz9jq.detached{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 600px;
+  height: 600px;
+  z-index: 10;
+  background-color: #fffffe;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  padding: 10px;
+  & > div{
+    font-size: 14px
+  }
+}
