@@ -147,6 +147,13 @@
   background-color: var(--theme-editor-bg) !important;
   color: var(--white);
 }
+.with-theme .css-1ugz9jq.detached {
+  background-color: #31374a;
+  border-color: #4a4747;
+}
+.with-theme .css-t2kxtv + .css-t2kxtv {
+  border-color: #636a82;
+}
 
 /* Switch styles */
 .switch-container {
@@ -230,6 +237,10 @@
 }
 .css-1ugz9jq.detached > div {
   font-size: 14px;
+}
+
+.css-1ugz9jq strong:before {
+  color: inherit;
 }
 
 /*# sourceMappingURL=flow-dark-theme.css.map */

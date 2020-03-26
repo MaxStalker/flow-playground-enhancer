@@ -181,6 +181,15 @@
     background-color: var(--theme-editor-bg) !important;
     color: var(--white);
   }
+
+  .css-1ugz9jq.detached {
+    background-color: #31374a;
+    border-color: #4a4747;
+  }
+
+  .css-t2kxtv + .css-t2kxtv {
+    border-color: #636a82;
+  }
 }
 
 /* Switch styles */
@@ -267,4 +276,8 @@
   & > div{
     font-size: 14px
   }
+}
+
+.css-1ugz9jq strong:before{
+  color: inherit;
 }
