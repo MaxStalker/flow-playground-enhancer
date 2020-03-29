@@ -21,6 +21,8 @@
   --theme-editor-code-class: var(--bright-green);
   --theme-editor-code-resource: var(--bright-pink);
   --theme-editor-code-comments: #636776;
+  --theme-editor-code-import: #e8c64a;
+  --theme-editor-code-strings: #b7d461;
   --theme-editor-code-block: #3f4454;
   --theme-editor-line-numbers: #57669b;
   --theme-deployment-result: var(--yellow);
@@ -31,6 +33,8 @@
   /* Main code*/
   /* Code parts classes*/
   /* Comments */
+  /* Import location*/
+  /* Strings*/
   /* Resource/Type Name*/
   /* Deployed resources */
 }
@@ -87,6 +91,12 @@
 }
 .with-theme .mtk8 {
   color: var(--theme-editor-code-comments);
+}
+.with-theme .mtk16 {
+  color: var(--theme-editor-code-import);
+}
+.with-theme .mtk20 {
+  color: var(--theme-editor-code-strings);
 }
 .with-theme .mtk22 {
   color: var(--theme-editor-code-resource);
@@ -154,6 +164,14 @@
 .with-theme .css-t2kxtv + .css-t2kxtv {
   border-color: #636a82;
 }
+.with-theme .css-jyir2x {
+  background-color: var(--theme-sidebar-selection);
+  color: var(--theme-header-title);
+}
+.with-theme .css-jyir2x:hover {
+  background-color: var(--theme-sidebar-selection);
+  color: var(--white);
+}
 
 /* Switch styles */
 .switch-container {
@@ -203,7 +221,7 @@
 
 /* Fix CSS Grid*/
 .css-rbz3lt.main-grid {
-  grid-template-columns: 288px 1fr !important;
+  grid-template-columns: auto 1fr !important;
   grid-template-rows: 72px 1fr !important;
 }
 
@@ -241,6 +259,27 @@
 
 .css-1ugz9jq strong:before {
   color: inherit;
+}
+
+.css-5d7ghp {
+  display: block !important;
+}
+
+.sidebar {
+  width: 288px;
+  resize: horizontal;
+}
+
+.monaco-scrollable-element.editor-scrollable {
+  width: calc(100% - 60px) !important;
+}
+
+.overflow-guard {
+  width: 100% !important;
+}
+
+.monaco-editor.vs {
+  width: 100% !important;
 }
 
 /*# sourceMappingURL=flow-dark-theme.css.map */

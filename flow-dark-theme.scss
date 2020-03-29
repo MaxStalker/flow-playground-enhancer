@@ -25,6 +25,8 @@
   --theme-editor-code-class: var(--bright-green);
   --theme-editor-code-resource: var(--bright-pink);
   --theme-editor-code-comments: #636776;
+  --theme-editor-code-import: #e8c64a;
+  --theme-editor-code-strings: #b7d461;
   --theme-editor-code-block: #3f4454;
   --theme-editor-line-numbers: #57669b;
 
@@ -55,7 +57,6 @@
 
   .sidebar {
     background: var(--theme-sidebar-bg);
-
     & .css-xjbdkn {
       color: var(--bright-green);
       background-color: var(--theme-sidebar-selection);
@@ -101,6 +102,16 @@
   /* Comments */
   .mtk8 {
     color: var(--theme-editor-code-comments);
+  }
+
+  /* Import location*/
+  .mtk16 {
+    color: var(--theme-editor-code-import);
+  }
+
+  /* Strings*/
+  .mtk20 {
+    color: var(--theme-editor-code-strings);
   }
 
   /* Resource/Type Name*/
@@ -190,6 +201,15 @@
   .css-t2kxtv + .css-t2kxtv {
     border-color: #636a82;
   }
+
+  .css-jyir2x {
+    background-color: var(--theme-sidebar-selection);
+    color: var(--theme-header-title);
+    &:hover {
+      background-color: var(--theme-sidebar-selection);
+      color: var(--white);
+    }
+  }
 }
 
 /* Switch styles */
@@ -198,9 +218,9 @@
   align-items: center;
   margin-left: 10px;
   padding-left: 20px;
-  border-left: 1px solid rgba(0,0,0,0.3);
-  .with-theme &{
-    border-left: 1px solid rgba(255,255,255,0.25);
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  .with-theme & {
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
   }
 }
 
@@ -217,48 +237,47 @@
   position: relative;
 }
 
-.switch-dot{
+.switch-dot {
   width: 20px;
   height: 20px;
   background-color: #bdc4f4;
   border-radius: 20px;
   transition: all 0.15s ease-in-out;
   transform: translateX(0);
-  &--active{
+  &--active {
     background-color: #00ff76;
     transform: translateX(24px);
   }
 }
 
-.switch-label{
+.switch-label {
   color: #222;
   font-family: Overpass, sans-serif;
-  &--active{
+  &--active {
     color: #00ff76;
   }
 }
 
-
 /* Fix CSS Grid*/
-.css-rbz3lt.main-grid{
-  grid-template-columns: 288px 1fr !important;
+.css-rbz3lt.main-grid {
+  grid-template-columns: auto 1fr !important;
   grid-template-rows: 72px 1fr !important;
 }
 
 /* Log containers */
 
-.css-169vnk6.code-log-container{
+.css-169vnk6.code-log-container {
   display: grid;
   grid-template-columns: 30% 70%;
   max-height: 200px;
 }
 
-.right-log{
+.right-log {
   overflow: auto;
 }
 
 .resources-log,
-.right-log{
+.right-log {
   width: 100% !important;
 }
 
@@ -280,4 +299,26 @@
 
 .css-1ugz9jq strong:before{
   color: inherit;
+}
+
+// Allow to display 2 tabs side-by-side on smaller screens
+.css-5d7ghp{
+  display: block !important;
+}
+
+.sidebar{
+  width: 288px;
+  resize: horizontal;
+}
+
+.monaco-scrollable-element.editor-scrollable{
+  width: calc(100% - 60px) !important;
+}
+
+.overflow-guard{
+  width: 100% !important;
+}
+
+.monaco-editor.vs{
+  width: 100% !important;
 }
