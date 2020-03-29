@@ -282,4 +282,10 @@
   width: 100% !important;
 }
 
+@media only screen and (max-width: 1080px) {
+  .css-1ogaoz {
+    display: none !important;
+  }
+}
+
 /*# sourceMappingURL=flow-dark-theme.css.map */

@@ -322,3 +322,11 @@
 .monaco-editor.vs{
   width: 100% !important;
 }
+
+// Hide tutorial button on small screens
+@media only screen and (max-width: 1080px) {
+  .css-1ogaoz {
+    display:none !important;
+  }
+}
+
