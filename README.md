@@ -1,5 +1,11 @@
 ## What is this thing?
-This is Chrome Extension, that will inject custom theme into your Flow Playground page to enable ``Dark Mode``.
+This is Chrome Extension, that will inject custom CSS and code into your Playground in order to enchance you developer experience. Below you can find a list of supported features:
+- Dark/Light theme switcher, with cross-browser saving of changes 
+- Transaction/Script log can be detached and moved around. It also sports bigger font for improved readability
+- Resizable sidebar
+- No more overlay saying that your screen is too small 😉
+- Big JSON resource data (bottom-right corner block) support - now it's properly contained and have scrollbars
+
 Feel free to contribute 😊
 
 ## How to install
