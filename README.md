@@ -1,6 +1,6 @@
 ## What is this thing?
 This is Chrome Extension, that will inject custom CSS and code into your Playground in order to enchance you developer experience. Below you can find a list of supported features:
-- Dark/Light theme switcher, with cross-browser saving of changes 
+- 🌑Dark/🌞Light theme switcher, with cross-browser saving of changes 
 - Transaction/Script log can be detached and moved around. It also sports bigger font for improved readability
 - Resizable sidebar
 - No more overlay saying that your screen is too small 😉
