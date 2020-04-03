@@ -34,6 +34,11 @@
   --theme-deployed-resources: var(--bright-pink);
 }
 
+// Resize icon for resources block
+.resize-icon, .css-19ulhrs{
+  color: black !important;
+}
+
 .with-theme {
   .main-grid {
     background: var(--theme-header-bg);
@@ -57,15 +62,16 @@
 
   .sidebar {
     background: var(--theme-sidebar-bg);
-    & .css-xjbdkn {
+    & .css-14xc9o {
       color: var(--bright-green);
       background-color: var(--theme-sidebar-selection);
       & input {
+        background-color: var(--theme-sidebar-selection);
         color: var(--bright-green);
       }
     }
 
-    & .css-p4qr03 {
+    & .css-1iue16b {
       color: #6a728e;
       background-color: var(--theme-editor-bg);
       & input {
@@ -74,7 +80,7 @@
     }
   }
 
-  .css-1ogaoz {
+  .css-1iue16b {
     cursor: pointer;
     &:hover {
       background-color: var(--theme-code-margin-bg);
@@ -87,6 +93,7 @@
 
   .main {
     background: var(--theme-editor-bg);
+    overflow: hidden;
   }
 
   /* Main code*/
@@ -169,7 +176,7 @@
   }
 
   /* Deployed resources */
-  .css-t2kxtv {
+  .css-1otvrdq {
     color: var(--theme-deployment-result);
   }
 
@@ -193,7 +200,7 @@
     color: var(--white);
   }
 
-  .css-1ugz9jq.detached {
+  .css-1tmkgm0.detached {
     background-color: #31374a;
     border-color: #4a4747;
   }
@@ -209,6 +216,34 @@
       background-color: var(--theme-sidebar-selection);
       color: var(--white);
     }
+  }
+
+  .css-1yd75pz{
+    background-color: #3e4354;
+    border-color: #4e556b;
+  }
+
+  /* Signers block*/
+  .css-173vat8{
+    background-color: #616986;
+  }
+  .css-i54jnx{
+    color: #2a2d37
+  }
+
+  .css-173vat8,
+  .css-i54jnx{
+    padding: 2px 4px;
+    bottom: -5px;
+  }
+
+  /* Plus icons next to transactions*/
+  .css-1q4y6wv{
+    color: #575c6d;
+  }
+
+  .css-3wfqfb{
+    color: var(--white);
   }
 }
 
@@ -259,7 +294,7 @@
 }
 
 /* Fix CSS Grid*/
-.css-rbz3lt.main-grid {
+.css-yzrjcg.main-grid {
   grid-template-columns: auto 1fr !important;
   grid-template-rows: 72px 1fr !important;
 }
@@ -281,17 +316,19 @@
   width: 100% !important;
 }
 
-.css-1ugz9jq.detached{
+.detached{
   position: fixed;
   top: 10px;
   right: 10px;
   width: 600px;
-  height: 600px;
+  height: 600px !important;
+  max-height: none !important;
   z-index: 10;
   background-color: #fffffe;
   border: 1px solid #ccc;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   padding: 10px;
+  overflow: auto !important;
   & > div{
     font-size: 14px
   }
@@ -309,6 +346,7 @@
 .sidebar{
   width: 288px;
   resize: horizontal;
+  overflow: auto;
 }
 
 .monaco-scrollable-element.editor-scrollable{
@@ -323,10 +361,17 @@
   width: 100% !important;
 }
 
+// resources block on account
+// hide scrollbar
+.css-1otvrdq div:nth-child(2){
+  overflow: auto !important;
+}
+
 // Hide tutorial button on small screens
 @media only screen and (max-width: 1080px) {
   .css-1ogaoz {
     display:none !important;
   }
 }
+
 

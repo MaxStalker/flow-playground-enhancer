@@ -2,7 +2,7 @@ const log = (...args) => console.log("Flow Theme:", ...args);
 log(`Don't strain your eyes`);
 
 const classMap = {
-  uiGrid: ".css-rbz3lt",
+  uiGrid: ".css-yzrjcg",
   uiHeader: ".css-vmmsdb",
   uiMain: ".css-1kgqnk0",
   uiSidebar: ".css-183nk0v",
@@ -10,7 +10,9 @@ const classMap = {
   uiHeaderIcons: ".css-4a84um",
   uiHeaderLogo: ".css-zkfaav",
   uiHeaderTitle: ".css-1dnh3is",
-  uiHeaderRightPart: ".css-4cffwv"
+  uiHeaderRightPart: ".css-4cffwv",
+
+  uiResizeIcon: ".css-19ulhrs",
   /*
   editorBlue: ".mtk6",
   editorCopy: ".mtk1",
@@ -118,9 +120,12 @@ document.addEventListener('mouseup', function() {
 
 function upgradeTransactionLog(){
   document.addEventListener('click', (event)=>{
-    const parentNode = document.querySelector('.css-pmwm6j .css-h83z3o');
+    console.log('click');
+    console.log(event.target);
+    const parentNode = document.querySelector('.css-jjiyx5 .css-h83z3o');
     if (event.target === parentNode){
-      const logBlock = document.querySelector(".css-pmwm6j .css-1ugz9jq");
+      console.log("detach")
+      const logBlock = document.querySelector(".css-jjiyx5 .css-1tmkgm0");
       logBlock.classList.toggle("detached");
       draggingEnabled = logBlock.classList.contains("detached")
       if (draggingEnabled){
@@ -135,8 +140,19 @@ function upgradeTransactionLog(){
     }
   })
 
+}
 
-  console.log('transaction log updated');
+function elementWatcher(classMap) {
+  const {uiResizeIcon} = classMap;
+  setInterval(()=>{
+    const resizeIcons = document.querySelectorAll(uiResizeIcon);
+    console.log(resizeIcons);
+    Array.from(resizeIcons).forEach(icon =>{
+      if (!icon.classList.contains("resize-icon")){
+        icon.classList.add("resize-icon");
+      }
+    })
+  }, 1500);
 }
 
 function init(themeName, classMap) {
@@ -148,7 +164,7 @@ function init(themeName, classMap) {
     uiHeaderIcons,
     uiHeaderLogo,
     uiHeaderTitle,
-    uiCodeLog
+    uiCodeLog,
   } = classMap;
 
   injectSwitcher(classMap);
@@ -182,14 +198,17 @@ function init(themeName, classMap) {
   const title = document.querySelector(uiHeaderTitle);
   title.classList.add("header-title");
 
+  /*
   const uiCodeLogContainer = document.querySelector(uiCodeLog);
   uiCodeLogContainer.classList.add('code-log-container');
 
   const [leftLog, rightLog] = document.querySelectorAll(`${uiCodeLog} > div`);
   leftLog.classList.add("resources-log");
   rightLog.classList.add("right-log");
+  */
 
   log("Class names are injected");
 
   upgradeTransactionLog();
+  elementWatcher(classMap);
 }
