@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "dev" : "parcel flow-dark-theme.scss manifest.json popup.html popup.js background.js"
+    "dev": "parcel flow-dark-theme.scss manifest.json popup.html popup.js background.js"
   },
   "devDependencies": {
-    "sass": "^1.26.3"
+    "sass": "^1.26.3",
+    "prettier": "^2.0.2"
   }
 }

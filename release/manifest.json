@@ -1,7 +1,7 @@
 {
-  "name": "Flow Playground - Theme Selector",
-  "version": "1.0",
-  "description": "Extension scaffold",
+  "name": "Flow Playground Enhancer",
+  "version": "0.0.2",
+  "description": "This extension is used to add some missing functionality to Flow Playground",
 
   "permissions": ["activeTab", "declarativeContent", "storage"],
 
@@ -13,10 +13,10 @@
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/get_started16.png",
-      "32": "images/get_started32.png",
-      "48": "images/get_started48.png",
-      "128": "images/get_started128.png"
+      "16": "images/flow_icon_16.png",
+      "32": "images/flow_icon_32.png",
+      "64": "images/flow_icon_64.png",
+      "128": "images/flow_icon_128.png"
     }
   },
 
@@ -33,10 +33,10 @@
   "web_accessible_resources": ["*.svg"],
 
   "icons": {
-    "16": "images/get_started16.png",
-    "32": "images/get_started32.png",
-    "48": "images/get_started48.png",
-    "128": "images/get_started128.png"
+    "16": "images/flow_icon_16.png",
+    "32": "images/flow_icon_32.png",
+    "64": "images/flow_icon_64.png",
+    "128": "images/flow_icon_128.png"
   },
   "manifest_version": 2
 }
