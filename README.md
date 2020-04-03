@@ -8,7 +8,10 @@ This is Chrome Extension, that will inject custom CSS and code into your Playgro
 
 Feel free to contribute 😊
 
-## How to install
+## Automatic installation
+Go to [Flow Playground on Chrome Store](https://chrome.google.com/webstore/detail/flow-playground-enhancer/agjkjdemgkkmgdmeobefbmfiakkgkkdh) and add extension to your browser, press OK on popup and refresh Playground page 
+
+## Manual installation
 
 - Clone this repository to your computer
 - Find "Extensions" under "More Tools -> Extensions" menu option (or simply type `chrome://extensions/` url and hit enter)
