@@ -29,6 +29,10 @@
   --theme-deployed-resources: var(--bright-pink);
 }
 
+.resize-icon, .css-19ulhrs {
+  color: black !important;
+}
+
 .with-theme {
   /* Main code*/
   /* Code parts classes*/
@@ -37,6 +41,8 @@
   /* Strings*/
   /* Resource/Type Name*/
   /* Deployed resources */
+  /* Signers block*/
+  /* Plus icons next to transactions*/
 }
 .with-theme .main-grid {
   background: var(--theme-header-bg);
@@ -57,24 +63,25 @@
 .with-theme .sidebar {
   background: var(--theme-sidebar-bg);
 }
-.with-theme .sidebar .css-xjbdkn {
+.with-theme .sidebar .css-14xc9o {
   color: var(--bright-green);
   background-color: var(--theme-sidebar-selection);
 }
-.with-theme .sidebar .css-xjbdkn input {
+.with-theme .sidebar .css-14xc9o input {
+  background-color: var(--theme-sidebar-selection);
   color: var(--bright-green);
 }
-.with-theme .sidebar .css-p4qr03 {
+.with-theme .sidebar .css-1iue16b {
   color: #6a728e;
   background-color: var(--theme-editor-bg);
 }
-.with-theme .sidebar .css-p4qr03 input {
+.with-theme .sidebar .css-1iue16b input {
   color: #6a728e;
 }
-.with-theme .css-1ogaoz {
+.with-theme .css-1iue16b {
   cursor: pointer;
 }
-.with-theme .css-1ogaoz:hover {
+.with-theme .css-1iue16b:hover {
   background-color: var(--theme-code-margin-bg);
 }
 .with-theme .css-3wfqfb:before {
@@ -82,6 +89,7 @@
 }
 .with-theme .main {
   background: var(--theme-editor-bg);
+  overflow: hidden;
 }
 .with-theme .mtk1 {
   color: var(--theme-editor-code-main);
@@ -138,7 +146,7 @@
   border-color: var(--theme-editor-cursor);
   color: var(--theme-sidebar-bg);
 }
-.with-theme .css-t2kxtv {
+.with-theme .css-1otvrdq {
   color: var(--theme-deployment-result);
 }
 .with-theme .css-qeegv1 {
@@ -157,7 +165,7 @@
   background-color: var(--theme-editor-bg) !important;
   color: var(--white);
 }
-.with-theme .css-1ugz9jq.detached {
+.with-theme .css-1tmkgm0.detached {
   background-color: #31374a;
   border-color: #4a4747;
 }
@@ -170,6 +178,27 @@
 }
 .with-theme .css-jyir2x:hover {
   background-color: var(--theme-sidebar-selection);
+  color: var(--white);
+}
+.with-theme .css-1yd75pz {
+  background-color: #3e4354;
+  border-color: #4e556b;
+}
+.with-theme .css-173vat8 {
+  background-color: #616986;
+}
+.with-theme .css-i54jnx {
+  color: #2a2d37;
+}
+.with-theme .css-173vat8,
+.with-theme .css-i54jnx {
+  padding: 2px 4px;
+  bottom: -5px;
+}
+.with-theme .css-1q4y6wv {
+  color: #575c6d;
+}
+.with-theme .css-3wfqfb {
   color: var(--white);
 }
 
@@ -220,7 +249,7 @@
 }
 
 /* Fix CSS Grid*/
-.css-rbz3lt.main-grid {
+.css-yzrjcg.main-grid {
   grid-template-columns: auto 1fr !important;
   grid-template-rows: 72px 1fr !important;
 }
@@ -241,19 +270,21 @@
   width: 100% !important;
 }
 
-.css-1ugz9jq.detached {
+.detached {
   position: fixed;
   top: 10px;
   right: 10px;
   width: 600px;
-  height: 600px;
+  height: 600px !important;
+  max-height: none !important;
   z-index: 10;
   background-color: #fffffe;
   border: 1px solid #ccc;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   padding: 10px;
+  overflow: auto !important;
 }
-.css-1ugz9jq.detached > div {
+.detached > div {
   font-size: 14px;
 }
 
@@ -268,6 +299,7 @@
 .sidebar {
   width: 288px;
   resize: horizontal;
+  overflow: auto;
 }
 
 .monaco-scrollable-element.editor-scrollable {
@@ -280,6 +312,10 @@
 
 .monaco-editor.vs {
   width: 100% !important;
+}
+
+.css-1otvrdq div:nth-child(2) {
+  overflow: auto !important;
 }
 
 @media only screen and (max-width: 1080px) {
