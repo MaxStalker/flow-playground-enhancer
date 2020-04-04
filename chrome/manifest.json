@@ -1,9 +1,9 @@
 {
   "name": "Flow Playground Enhancer",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "This extension is used to add some missing functionality to Flow Playground",
 
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "permissions": ["activeTab", "storage"],
 
   "background": {
     "scripts": ["background.js"],

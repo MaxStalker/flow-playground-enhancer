@@ -1,0 +1,36 @@
+{
+  "name": "Flow Playground Enhancer",
+  "version": "0.0.4",
+  "description": "This extension is used to add some missing functionality to Flow Playground",
+
+  "permissions": ["activeTab", "storage"],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://play.onflow.org/*"],
+      "js": ["contentScript.js"],
+      "css": ["flow-dark-theme.css"]
+    }
+  ],
+
+  "web_accessible_resources": ["*.svg"],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "starkaindustries@gmail.com",
+      "strict_min_version": "42.0"
+    }
+  },
+
+  "icons": {
+    "16": "images/flow_icon_16.png",
+    "32": "images/flow_icon_32.png",
+    "64": "images/flow_icon_64.png",
+    "128": "images/flow_icon_128.png"
+  },
+  "manifest_version": 2
+}

@@ -1,0 +1,359 @@
+/*
+  This theme is based on Ariake Dark for Visual Studio Code
+  https://marketplace.visualstudio.com/items?itemName=wart.ariake-dark
+*/
+.basic-dark-theme {
+  --white: #bdc4f4;
+  --bright-white: #d0d7f4;
+  --bright-green: #23d299;
+  --bright-pink: #df86f6;
+  --yellow: #ffc107;
+  --theme-header-bg: #25272f;
+  --theme-header-title: var(--white);
+  --theme-sidebar-bg: #1c1f26;
+  --theme-sidebar-selection: #31374a;
+  --theme-editor-bg: #2a2d37;
+  --theme-code-margin-bg: #303442;
+  --theme-editor-cursor: var(--bright-white);
+  --theme-editor-code-main: var(--white);
+  --theme-editor-selection-focused: rgba(44, 110, 208, 0.35);
+  --theme-editor-selection: rgba(44, 110, 208, 0.25);
+  --theme-editor-code-class: var(--bright-green);
+  --theme-editor-code-resource: var(--bright-pink);
+  --theme-editor-code-comments: #636776;
+  --theme-editor-code-import: #e8c64a;
+  --theme-editor-code-strings: #b7d461;
+  --theme-editor-code-block: #3f4454;
+  --theme-editor-line-numbers: #57669b;
+  --theme-panels-border: #444c67;
+  --theme-deployment-result: var(--yellow);
+  --theme-deployed-resources: var(--bright-pink);
+}
+
+.resize-icon, .css-19ulhrs {
+  color: black !important;
+}
+
+.main {
+  overflow: hidden;
+}
+
+.css-k3zxhn {
+  overflow: auto !important;
+}
+
+.css-1esbhrg > div:nth-child(3) {
+  overflow: auto !important;
+}
+
+.with-theme {
+  /* Main code*/
+  /* Code parts classes*/
+  /* Comments */
+  /* Import location*/
+  /* Strings*/
+  /* Resource/Type Name*/
+  /* Deployed result */
+  /* Deployed resources */
+  /* Signers block*/
+  /*Log contaienrs borders*/
+  /* Plus icons next to transactions*/
+}
+.with-theme .main-grid {
+  background: var(--theme-header-bg);
+}
+.with-theme .header {
+  background: var(--theme-header-bg);
+}
+.with-theme .header-icon {
+  color: var(--white);
+  cursor: pointer;
+}
+.with-theme .header-icon:hover {
+  background-color: var(--theme-code-margin-bg);
+}
+.with-theme .header-title {
+  color: var(--theme-header-title);
+}
+.with-theme .sidebar {
+  background: var(--theme-sidebar-bg);
+}
+.with-theme .sidebar .css-14xc9o {
+  color: var(--bright-green);
+  background-color: var(--theme-sidebar-selection);
+}
+.with-theme .sidebar .css-14xc9o input {
+  background-color: var(--theme-sidebar-selection);
+  color: var(--bright-green);
+}
+.with-theme .sidebar .css-1iue16b {
+  color: #6a728e;
+  background-color: var(--theme-editor-bg);
+}
+.with-theme .sidebar .css-1iue16b input {
+  color: #6a728e;
+}
+.with-theme .css-1iue16b {
+  cursor: pointer;
+}
+.with-theme .css-1iue16b:hover {
+  background-color: var(--theme-code-margin-bg);
+}
+.with-theme .css-3wfqfb:before {
+  display: none;
+}
+.with-theme .main {
+  background: var(--theme-editor-bg);
+}
+.with-theme .css-jjiyx5 > div > div > div:nth-child(3) {
+  background-color: var(--theme-code-margin-bg) !important;
+}
+.with-theme .mtk1 {
+  color: var(--theme-editor-code-main);
+}
+.with-theme .mtk6 {
+  color: var(--theme-editor-code-class);
+}
+.with-theme .mtk8 {
+  color: var(--theme-editor-code-comments);
+}
+.with-theme .mtk16 {
+  color: var(--theme-editor-code-import);
+}
+.with-theme .mtk20 {
+  color: var(--theme-editor-code-strings);
+}
+.with-theme .mtk22 {
+  color: var(--theme-editor-code-resource);
+}
+.with-theme .monaco-editor .line-numbers {
+  color: var(--theme-editor-line-numbers);
+}
+.with-theme .monaco-editor .margin {
+  background-color: var(--theme-code-margin-bg);
+}
+.with-theme .monaco-editor .lines-content {
+  background-color: var(--theme-editor-bg);
+}
+.with-theme .monaco-editor .lines-content .cigr {
+  box-shadow: inset 1px 0 0 var(--theme-editor-code-block);
+}
+.with-theme .monaco-editor .lines-content .cigra {
+  box-shadow: inset 1px 0 0 var(--theme-editor-code-class);
+}
+.with-theme .monaco-editor .scroll-decoration {
+  box-shadow: inset 0 6px 6px -6px rgba(0, 0, 0, 0.25);
+}
+.with-theme .monaco-editor .codicon-chevron-right,
+.with-theme .monaco-editor .codicon-chevron-down {
+  color: var(--theme-editor-line-numbers);
+}
+.with-theme .monaco-editor .view-overlays .current-line {
+  border: none;
+  background-color: #31374a;
+}
+.with-theme .monaco-editor .focused .selected-text {
+  background-color: var(--theme-editor-selection-focused);
+}
+.with-theme .monaco-editor .selected-text {
+  background-color: var(--theme-editor-selection);
+}
+.with-theme .monaco-editor .cursor {
+  background-color: var(--theme-editor-cursor);
+  border-color: var(--theme-editor-cursor);
+  color: var(--theme-sidebar-bg);
+}
+.with-theme .css-g2pw1o {
+  color: var(--theme-deployment-result);
+  background-color: var(--theme-header-bg) !important;
+}
+.with-theme .css-1otvrdq {
+  color: var(--theme-deployed-resources);
+  background-color: var(--theme-header-bg) !important;
+  border-color: var(--theme-panels-border) !important;
+}
+.with-theme .css-h90thf,
+.with-theme .css-169vnk6 {
+  border-color: var(--theme-header-bg) !important;
+}
+.with-theme .css-169vnk6 > div:nth-child(1),
+.with-theme .resources-log {
+  border-right: 1px solid var(--theme-header-bg) !important;
+}
+.with-theme .css-169vnk6 > div:nth-child(2),
+.with-theme .right-log {
+  background-color: var(--theme-editor-bg) !important;
+  color: var(--white);
+}
+.with-theme .css-1tmkgm0.detached {
+  background-color: #31374a;
+  border-color: #4a4747;
+}
+.with-theme .css-t2kxtv + .css-t2kxtv {
+  border-color: #636a82;
+}
+.with-theme .css-jyir2x {
+  background-color: var(--theme-sidebar-selection);
+  color: var(--theme-header-title);
+}
+.with-theme .css-jyir2x:hover {
+  background-color: var(--theme-sidebar-selection);
+  color: var(--white);
+}
+.with-theme .css-1yd75pz {
+  background-color: #3e4354;
+  border-color: #4e556b;
+}
+.with-theme .css-173vat8 {
+  background-color: #616986;
+}
+.with-theme .css-i54jnx {
+  color: #2a2d37;
+}
+.with-theme .css-173vat8,
+.with-theme .css-i54jnx {
+  padding: 2px 4px;
+  bottom: -5px;
+}
+.with-theme .resize-icon, .with-theme .css-19ulhrs {
+  color: var(--bright-green) !important;
+}
+.with-theme .css-1esbhrg,
+.with-theme .css-g2pw1o,
+.with-theme .css-jjiyx5 > div > div {
+  border-color: var(--theme-panels-border) !important;
+}
+.with-theme .css-1q4y6wv {
+  color: #575c6d;
+}
+.with-theme .css-3wfqfb {
+  color: var(--white);
+}
+
+/* Switch styles */
+.switch-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+}
+.with-theme .switch-container {
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.switch-control {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: #3a3c46;
+  padding: 0 2px;
+  border-radius: 24px;
+  width: 48px;
+  height: 24px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.switch-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #bdc4f4;
+  border-radius: 20px;
+  transition: all 0.15s ease-in-out;
+  transform: translateX(0);
+}
+.switch-dot--active {
+  background-color: #00ff76;
+  transform: translateX(24px);
+}
+
+.switch-label {
+  color: #222;
+  font-family: Overpass, sans-serif;
+}
+.switch-label--active {
+  color: #00ff76;
+}
+
+/* Fix CSS Grid*/
+.css-yzrjcg.main-grid {
+  grid-template-columns: auto 1fr !important;
+  grid-template-rows: 72px 1fr !important;
+}
+
+/* Log containers */
+.css-169vnk6.code-log-container {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  max-height: 200px;
+}
+
+.right-log {
+  overflow: auto;
+}
+
+.resources-log,
+.right-log {
+  width: 100% !important;
+}
+
+.detached {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 600px;
+  height: 600px !important;
+  max-height: none !important;
+  z-index: 10;
+  background-color: #fffffe;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  overflow: auto !important;
+}
+.detached > div {
+  font-size: 14px;
+}
+
+.css-1ugz9jq strong:before {
+  color: inherit;
+}
+
+.css-5d7ghp {
+  display: block !important;
+}
+
+.sidebar {
+  width: 288px;
+  resize: horizontal;
+  overflow: auto !important;
+}
+
+.css-160z17c + .css-160z17c:before {
+  border-top: 1px solid rgba(150, 150, 150, 0.5) !important;
+}
+
+.monaco-scrollable-element.editor-scrollable {
+  width: calc(100% - 60px) !important;
+}
+
+.overflow-guard {
+  width: 100% !important;
+}
+
+.monaco-editor.vs {
+  width: 100% !important;
+}
+
+.css-1otvrdq div:nth-child(2) {
+  overflow: auto !important;
+}
+
+@media only screen and (max-width: 1080px) {
+  .css-1ogaoz {
+    display: none !important;
+  }
+}
+
+/*# sourceMappingURL=flow-dark-theme.css.map */

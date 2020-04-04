@@ -25,12 +25,25 @@
   --theme-editor-code-strings: #b7d461;
   --theme-editor-code-block: #3f4454;
   --theme-editor-line-numbers: #57669b;
+  --theme-panels-border: #444c67;
   --theme-deployment-result: var(--yellow);
   --theme-deployed-resources: var(--bright-pink);
 }
 
 .resize-icon, .css-19ulhrs {
   color: black !important;
+}
+
+.main {
+  overflow: hidden;
+}
+
+.css-k3zxhn {
+  overflow: auto !important;
+}
+
+.css-1esbhrg > div:nth-child(3) {
+  overflow: auto !important;
 }
 
 .with-theme {
@@ -40,8 +53,10 @@
   /* Import location*/
   /* Strings*/
   /* Resource/Type Name*/
+  /* Deployed result */
   /* Deployed resources */
   /* Signers block*/
+  /*Log contaienrs borders*/
   /* Plus icons next to transactions*/
 }
 .with-theme .main-grid {
@@ -89,7 +104,9 @@
 }
 .with-theme .main {
   background: var(--theme-editor-bg);
-  overflow: hidden;
+}
+.with-theme .css-jjiyx5 > div > div > div:nth-child(3) {
+  background-color: var(--theme-code-margin-bg) !important;
 }
 .with-theme .mtk1 {
   color: var(--theme-editor-code-main);
@@ -146,11 +163,14 @@
   border-color: var(--theme-editor-cursor);
   color: var(--theme-sidebar-bg);
 }
-.with-theme .css-1otvrdq {
+.with-theme .css-g2pw1o {
   color: var(--theme-deployment-result);
+  background-color: var(--theme-header-bg) !important;
 }
-.with-theme .css-qeegv1 {
+.with-theme .css-1otvrdq {
   color: var(--theme-deployed-resources);
+  background-color: var(--theme-header-bg) !important;
+  border-color: var(--theme-panels-border) !important;
 }
 .with-theme .css-h90thf,
 .with-theme .css-169vnk6 {
@@ -194,6 +214,14 @@
 .with-theme .css-i54jnx {
   padding: 2px 4px;
   bottom: -5px;
+}
+.with-theme .resize-icon, .with-theme .css-19ulhrs {
+  color: var(--bright-green) !important;
+}
+.with-theme .css-1esbhrg,
+.with-theme .css-g2pw1o,
+.with-theme .css-jjiyx5 > div > div {
+  border-color: var(--theme-panels-border) !important;
 }
 .with-theme .css-1q4y6wv {
   color: #575c6d;
@@ -299,7 +327,11 @@
 .sidebar {
   width: 288px;
   resize: horizontal;
-  overflow: auto;
+  overflow: auto !important;
+}
+
+.css-160z17c + .css-160z17c:before {
+  border-top: 1px solid rgba(150, 150, 150, 0.5) !important;
 }
 
 .monaco-scrollable-element.editor-scrollable {
