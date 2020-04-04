@@ -10,10 +10,10 @@ Feel free to contribute 😊
 
 ## Automatic installation
 ### Chrome Users
-Go to [Flow Playground on Chrome Store](https://chrome.google.com/webstore/detail/flow-playground-enhancer/agjkjdemgkkmgdmeobefbmfiakkgkkdh) and add extension to your browser, press OK on popup and refresh Playground page 
+Go to [Flow Playground Enhancer on Chrome Store](https://chrome.google.com/webstore/detail/flow-playground-enhancer/agjkjdemgkkmgdmeobefbmfiakkgkkdh) and add extension to your browser, press OK on popup and refresh Playground page 
 
 ### Firefox Users
-Go to [Flow Playground on Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/flow-playground-enhancer/) and add extension to your browser
+Go to [Flow Playground Enhancer on Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/flow-playground-enhancer/) and add extension to your browser
 
 ## Manual installation
 First, clone this repository to your computer. Then follow instruction based on your browsers
