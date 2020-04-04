@@ -9,15 +9,23 @@ This is Chrome Extension, that will inject custom CSS and code into your Playgro
 Feel free to contribute 😊
 
 ## Automatic installation
+### Chrome Users
 Go to [Flow Playground on Chrome Store](https://chrome.google.com/webstore/detail/flow-playground-enhancer/agjkjdemgkkmgdmeobefbmfiakkgkkdh) and add extension to your browser, press OK on popup and refresh Playground page 
 
-## Manual installation
+### Firefox Users
+Go to [Flow Playground on Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/flow-playground-enhancer/) and add extension to your browser
 
-- Clone this repository to your computer
+## Manual installation
+First, clone this repository to your computer. Then follow instruction based on your browsers
+
+### Chrome Users
 - Find "Extensions" under "More Tools -> Extensions" menu option (or simply type `chrome://extensions/` url and hit enter)
 - Enable "Develop Mode"
-- Press "Load Unpacked" and target "release" repository in folder, where you have cloned this repository
+- Press "Load Unpacked" and target **chrome** repository in folder, where you have cloned this repository
 - Refresh the page and enjoy the dark mode
+
+### Firefox Users
+Open the [about:debugging](about:debugging) page, click "This Firefox" (in newer versions of Firefox), click "Load Temporary Add-on", then select any file in **mozilla** folder
 
 ## Customization
 
