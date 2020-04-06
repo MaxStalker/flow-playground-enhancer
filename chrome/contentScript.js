@@ -62,7 +62,7 @@ function injectSwitcher(classMap) {
 
   const root = document.getElementById("root");
 
-  control.addEventListener("click", event => {
+  control.addEventListener("click", (event) => {
     if (
       event.target.classList.contains("switch-control") ||
       event.target.classList.contains("switch-dot")
@@ -79,81 +79,180 @@ function injectSwitcher(classMap) {
     }
   });
 
-  chrome.runtime.sendMessage({ msg: "get-theme" }, (data)=> {
-    console.log('some data here', data);
+  chrome.runtime.sendMessage({ msg: "get-theme" }, (data) => {
     if (data.flowTheme === "dark") {
       root.classList.add("with-theme");
       dotControl.classList.add("switch-dot--active");
       labelControl.classList.add("switch-label--active");
     }
   });
-
 }
 
-let isDown = false
+let isDown = false;
 let draggingEnabled = true;
 let dragBlock = null;
 const drag = (e) => {
   isDown = true;
-  if (draggingEnabled){
+  if (draggingEnabled) {
     offset = [
       dragBlock.offsetLeft - e.clientX,
-      dragBlock.offsetTop - e.clientY
+      dragBlock.offsetTop - e.clientY,
     ];
   }
-}
+};
 const move = (event) => {
   event.preventDefault();
   if (isDown && draggingEnabled) {
     mousePosition = {
-      x : event.clientX,
-      y : event.clientY
-
+      x: event.clientX,
+      y: event.clientY,
     };
-    dragBlock.style.left = (mousePosition.x + offset[0]) + 'px';
-    dragBlock.style.top  = (mousePosition.y + offset[1]) + 'px';
+    dragBlock.style.left = mousePosition.x + offset[0] + "px";
+    dragBlock.style.top = mousePosition.y + offset[1] + "px";
   }
-}
-document.addEventListener('mouseup', function() {
-  isDown = false;
-}, true);
+};
+document.addEventListener(
+  "mouseup",
+  function () {
+    isDown = false;
+  },
+  true
+);
 
-function upgradeTransactionLog(){
-  document.addEventListener('click', (event)=>{
-    console.log('click');
-    console.log(event.target);
-    const parentNode = document.querySelector('.css-jjiyx5 .css-h83z3o');
-    if (event.target === parentNode){
-      console.log("detach")
+function upgradeTransactionLog() {
+  document.addEventListener("click", (event) => {
+    const parentNode = document.querySelector(".css-jjiyx5 .css-h83z3o");
+    if (event.target === parentNode) {
+      console.log("detach");
       const logBlock = document.querySelector(".css-jjiyx5 .css-1tmkgm0");
       logBlock.classList.toggle("detached");
-      draggingEnabled = logBlock.classList.contains("detached")
-      if (draggingEnabled){
+      draggingEnabled = logBlock.classList.contains("detached");
+      if (draggingEnabled) {
         dragBlock = logBlock;
-        logBlock.addEventListener('mousedown', drag , true);
-        document.addEventListener('mousemove', move, true);
+        logBlock.addEventListener("mousedown", drag, true);
+        document.addEventListener("mousemove", move, true);
       } else {
-        dragBlock = null
-        logBlock.removeEventListener('mousedown', drag);
-        document.removeEventListener('mousemove', move);
+        dragBlock = null;
+        logBlock.removeEventListener("mousedown", drag);
+        document.removeEventListener("mousemove", move);
       }
     }
-  })
-
+  });
 }
 
 function elementWatcher(classMap) {
-  const {uiResizeIcon} = classMap;
-  setInterval(()=>{
+  const { uiResizeIcon } = classMap;
+  setInterval(() => {
     const resizeIcons = document.querySelectorAll(uiResizeIcon);
-    console.log(resizeIcons);
-    Array.from(resizeIcons).forEach(icon =>{
-      if (!icon.classList.contains("resize-icon")){
+    Array.from(resizeIcons).forEach((icon) => {
+      if (!icon.classList.contains("resize-icon")) {
         icon.classList.add("resize-icon");
       }
-    })
+    });
   }, 1500);
 }
+
+function getEditorText(index) {
+  if (window.monaco) {
+    return window.monaco.editor.getModels()[index + 1].getValue();
+  } else {
+    return "ERROR: Can't find Monaco Editor...";
+  }
+}
+
+function storeAction(activeIndex) {
+  return `javascript: (function(){
+    const value = window.monaco.editor.getModels()[${activeIndex}].getLinesContent().join("\\n");
+    const container = document.getElementById("git-swap-container");
+    container.value = value;
+    
+    console.log('Value is stored in text field');
+  })();`;
+}
+
+function restoreAction(activeIndex) {
+  return `javascript: (function(){
+    const container = document.getElementById("git-swap-container");
+    const value = container.value;
+    window.monaco.editor.getModels()[${activeIndex}].setValue(value);
+  })();`;
+}
+
+function findActiveEditor() {
+  const editorList = Array.from(document.querySelectorAll('.css-248zdd > div'));
+
+  let activeIndex = null;
+  for (let i = 0; i < editorList.length; i++) {
+    const item = editorList[i]
+    if (item.classList.contains("css-14xc9o")){
+      activeIndex = i;
+      break
+    }
+  }
+}
+
+function initGitInterface() {
+const gitContainer = document.createElement("div");
+gitContainer.classList.add("git-container");
+
+const mainGrid = document.querySelector(".main-grid");
+mainGrid.appendChild(gitContainer);
+
+const btnCommit = document.createElement("button");
+btnCommit.textContent = "Store Code";
+
+const btnRestore = document.createElement("button");
+btnRestore.textContent = "Restore Code";
+
+const btnSubmit = document.createElement("button");
+btnSubmit.id = "flow-btn-submit"
+btnSubmit.innerText = "Submit Code to Git"
+gitContainer.appendChild(btnSubmit);
+
+btnSubmit.addEventListener('click', ()=>{
+  console.log('Send this thing to git now...')
+});
+
+const swapContainer = document.createElement("textarea");
+swapContainer.id = "git-swap-container";
+swapContainer.style.display = "none";
+document.body.appendChild(swapContainer);
+
+gitContainer.appendChild(swapContainer);
+
+const store = document.createElement("a");
+store.href = storeAction(1);
+store.innerText = "Store value";
+store.id="flow-link-store";
+gitContainer.appendChild(store);
+
+const restore = document.createElement("a");
+restore.href = restore.innerText = "Restore value";
+restore.id = "flow-link-restore"
+gitContainer.appendChild(restore);
+
+const btnTestGit = document.createElement("button");
+btnTestGit.id = "flow-btn-submit"
+btnTestGit.innerText = "Test link-click"
+gitContainer.appendChild(btnTestGit);
+
+btnTestGit.addEventListener('click', ()=>{
+  store.click();
+});
+}
+
+function storeCallback(){
+console.log('Now you can store this thing on github');
+}
+
+window.addEventListener("load", (loadEvent) => {
+/*  let window = loadEvent.currentTarget;
+// window.document.title='You changed me!';
+
+setTimeout(()=>{
+  console.log(window.superText)
+},3000);*/
+});
 
 function init(themeName, classMap) {
   const {
@@ -186,12 +285,12 @@ function init(themeName, classMap) {
   main.classList.add("main");
 
   const headerIcons = document.querySelectorAll(uiHeaderIcons);
-  headerIcons.forEach(node => {
+  headerIcons.forEach((node) => {
     node.classList.add("header-icon");
   });
 
   const logo = document.querySelector(`${uiHeaderLogo} img`);
-  chrome.runtime.sendMessage({ msg: "get-logo-image" }, data => {
+  chrome.runtime.sendMessage({ msg: "get-logo-image" }, (data) => {
     logo.src = data.link;
   });
 
@@ -211,4 +310,25 @@ function init(themeName, classMap) {
 
   upgradeTransactionLog();
   elementWatcher(classMap);
+
+  initGitInterface();
+
+  /*
+  chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if( request.message === "get-current-code" ) {
+        console.log("GET ME SOME CODE")
+        const payload = "// Basic Contract"
+
+        chrome.runtime.sendMessage({ message: "git-commit", payload });
+      }
+      // I guess we need to send response back?..
+      // sendResponse(false)
+    }
+  );
+  */
+
+  function start() {
+    alert("started");
+  }
 }
