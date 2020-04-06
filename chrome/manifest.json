@@ -3,21 +3,22 @@
   "version": "0.0.4",
   "description": "This extension is used to add some missing functionality to Flow Playground",
 
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "tabs", "https://*.onflow.org/*"],
 
   "background": {
     "scripts": ["background.js"],
     "persistent": false
   },
 
-  "page_action": {
-    "default_popup": "popup.html",
+  "browser_action": {
+    "default_title": "Show Git version",
     "default_icon": {
       "16": "images/flow_icon_16.png",
       "32": "images/flow_icon_32.png",
       "64": "images/flow_icon_64.png",
       "128": "images/flow_icon_128.png"
-    }
+    },
+    "default_popup": "popup.html"
   },
 
   "options_page": "options.html",
