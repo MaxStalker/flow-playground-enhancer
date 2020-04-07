@@ -3,7 +3,13 @@
     "dev": "parcel flow-dark-theme.scss manifest.json popup.html popup.js background.js"
   },
   "devDependencies": {
-    "sass": "^1.26.3",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "sass": "^1.26.3"
+  },
+  "dependencies": {
+    "react": ">= 16.8.0",
+    "react-dom": ">= 16.8.0",
+    "react-is": ">= 16.8.0",
+    "styled-components": "^5.1.0"
   }
 }
