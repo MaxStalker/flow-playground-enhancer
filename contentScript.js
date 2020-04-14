@@ -167,9 +167,7 @@ function storeAction(activeIndex) {
   return `javascript: (function(){
     const value = window.monaco.editor.getModels()[${activeIndex}].getLinesContent().join("\\n");
     const container = document.getElementById("git-swap-container");
-    container.value = value;
-    
-    console.log('Value is stored in text field');
+    container.value = value;    
   })();`;
 }
 
