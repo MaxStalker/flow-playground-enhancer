@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { createPortal } from "react-dom";
+import { Provider, inject, observer } from "mobx-react";
 import { Switch } from "./components/Switch";
+import AppRender from "./components/AppRender";
+import { store } from "./models";
 
 class PortalBlock extends React.Component {
   constructor(props) {
@@ -36,14 +39,16 @@ class GitApp extends Component {
   };
 
   render() {
+    const { showGit } = this.state;
     return (
-      <>
+      <Provider {...store}>
+        <AppRender />
         <PortalBlock portalId="git-portal">
-          <Switch active={showGit} onClick={toggleGit} label="Git" />
+          <Switch active={showGit} onClick={this.toggleGit} label="Git" />
         </PortalBlock>
-      </>
+      </Provider>
     );
   }
 }
 
-export default inject("commitList", "settings", "router")(observer(GitApp));
+export default GitApp;
