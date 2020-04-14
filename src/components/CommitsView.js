@@ -40,10 +40,11 @@ class CommitsView extends Component {
   };
 
   render() {
-    const { commitList, router } = this.props;
+    const { commitList, router, fileManager } = this.props;
     const { isLoaded, createNew } = commitList;
+    const { branch, fileName } = fileManager;
     return (
-      <MainContainer grid>
+      <MainContainer>
         <SectionHeader>
           <Title>Commits</Title>
           <Action
@@ -53,6 +54,8 @@ class CommitsView extends Component {
             }}
           />
         </SectionHeader>
+        <p>{branch}</p>
+        <p>{fileName}</p>
         <NewCommit
           createNew={createNew}
           getCode={getCode}
@@ -75,6 +78,6 @@ class CommitsView extends Component {
   }
 }
 
-export default inject("commitList", "router", "settings")(
+export default inject("commitList", "router", "settings", "fileManager")(
   observer(CommitsView)
 );

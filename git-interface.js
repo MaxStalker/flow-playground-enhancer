@@ -20,16 +20,16 @@ function restoreAction(activeIndex) {
 }
 export const initGitInterface = () => {
   const gitContainer = document.createElement("div");
-  gitContainer.classList.add('grid-git');
+  gitContainer.classList.add("grid-git");
   gitContainer.id = "grid-git";
 
   const mainGrid = document.querySelector(".main-grid");
   mainGrid.appendChild(gitContainer);
 
   // Create portal to put in button
-  const rightPart = document.getElementById('header-right-part');
-  const portalContainer = document.createElement('div');
-  portalContainer.id = 'git-portal';
+  const rightPart = document.getElementById("header-right-part");
+  const portalContainer = document.createElement("div");
+  portalContainer.id = "git-portal";
   rightPart.appendChild(portalContainer);
 
   /*
@@ -76,5 +76,6 @@ export const initGitInterface = () => {
     store.click(); //
   });
   */
+
   render(<GitApp />, gitContainer);
 };

@@ -1,4 +1,5 @@
 import { initGitInterface } from "./git-interface";
+import { fileManager } from "./src/models/FileManager";
 
 const log = (...args) => console.log("Flow Theme:", ...args);
 log(`Don't strain your eyes`);
@@ -123,24 +124,50 @@ document.addEventListener(
 );
 
 function upgradeTransactionLog() {
-  document.addEventListener("click", event => {
-    const parentNode = document.querySelector(".css-jjiyx5 .css-h83z3o");
-    if (event.target === parentNode) {
-      console.log("detach");
-      const logBlock = document.querySelector(".css-jjiyx5 .css-1tmkgm0");
-      logBlock.classList.toggle("detached");
-      draggingEnabled = logBlock.classList.contains("detached");
-      if (draggingEnabled) {
-        dragBlock = logBlock;
-        logBlock.addEventListener("mousedown", drag, true);
-        document.addEventListener("mousemove", move, true);
-      } else {
-        dragBlock = null;
-        logBlock.removeEventListener("mousedown", drag);
-        document.removeEventListener("mousemove", move);
+  document.addEventListener(
+    "click",
+    event => {
+      const parentNode = document.querySelector(".css-jjiyx5 .css-h83z3o");
+      if (event.target === parentNode) {
+        console.log("detach");
+        const logBlock = document.querySelector(".css-jjiyx5 .css-1tmkgm0");
+        logBlock.classList.toggle("detached");
+        draggingEnabled = logBlock.classList.contains("detached");
+        if (draggingEnabled) {
+          dragBlock = logBlock;
+          logBlock.addEventListener("mousedown", drag, true);
+          document.addEventListener("mousemove", move, true);
+        } else {
+          dragBlock = null;
+          logBlock.removeEventListener("mousedown", drag);
+          document.removeEventListener("mousemove", move);
+        }
       }
-    }
-  });
+      if (event.target.classList.contains("css-1iue16b")) {
+        console.log("NEW EDITOR");
+
+        const tag = event.target.parentNode.parentNode.querySelector(
+          ".css-h83z3o"
+        ).textContent;
+        console.log(tag);
+
+        const items = event.target.parentNode.querySelectorAll(":scope > div");
+        const itemsArr = Array.from(items);
+
+        let activeIndex = null;
+        for (let i = 0; i < itemsArr.length; i++) {
+          const item = itemsArr[i];
+          if (item === event.target) {
+            activeIndex = i;
+            break;
+          }
+        }
+
+        fileManager.setFilename(tag, activeIndex + 1);
+      }
+    },
+    true
+  );
 }
 
 function elementWatcher(classMap) {
@@ -190,6 +217,8 @@ function findActiveEditor() {
       break;
     }
   }
+
+  return activeIndex;
 }
 /*
 function initGitInterface() {
