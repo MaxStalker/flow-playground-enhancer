@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { createPortal } from "react-dom";
-import { MainContainer, SectionHeader } from "./components/Basic";
 import { Switch } from "./components/Switch";
 
 class PortalBlock extends React.Component {
@@ -25,19 +24,26 @@ class PortalBlock extends React.Component {
   }
 }
 
-export default function GitApp() {
-  const [showGit, toggle] = useState(true);
-  const toggleGit = () => {
-    toggle(!showGit);
+class GitApp extends Component {
+  state = {
+    showGit: true
+  };
+
+  toggleGit = () => {
+    this.setState({ showGit: !this.state.showGit });
     const gridGit = document.getElementById("grid-git");
     gridGit.classList.toggle("grid-git-hide");
   };
-  return (
-    <MainContainer>
-      <SectionHeader>Commits</SectionHeader>
-      <PortalBlock portalId="git-portal">
-        <Switch active={showGit} onClick={toggleGit} label="Git" />
-      </PortalBlock>
-    </MainContainer>
-  );
+
+  render() {
+    return (
+      <>
+        <PortalBlock portalId="git-portal">
+          <Switch active={showGit} onClick={toggleGit} label="Git" />
+        </PortalBlock>
+      </>
+    );
+  }
 }
+
+export default inject("commitList", "settings", "router")(observer(GitApp));
