@@ -1,4 +1,4 @@
-import { types, flow } from "mobx-state-tree";
+import { types, flow, onAction } from "mobx-state-tree";
 // For each editor we need a list of commits
 import { Commit } from "./Commit";
 import {
@@ -10,6 +10,7 @@ import {
   updateRef,
 } from "../utils/github";
 import { settings } from "./Settings";
+import { fileManager, branch } from "./FileManager";
 
 // Get mocked data from here
 export const CommitList = types
@@ -18,15 +19,16 @@ export const CommitList = types
     isLoaded: types.boolean,
   })
   .actions((self) => ({
-    fetchList: flow(function* (id) {
+    fetchList: flow(function* () {
       self.isLoaded = false;
 
       const { repoName, repoOwner, token } = settings;
+      const { filename } = fileManager;
 
       const response = yield getBranchCommits(
         token,
         { repoName, repoOwner },
-        { filename: "test.cdc" }
+        { filename }
       );
 
       self.commits = response.map(({ sha, commit }) => {
@@ -39,41 +41,54 @@ export const CommitList = types
       self.isLoaded = true;
     }),
 
-    createNew: flow(function* (branch, message, code) {
+    createNew: flow(function* (message, code, callback) {
       /* We can create commit here, so it will be shown in UI
       const newCommit = Commit.create({
         message
       });
       */
 
-      const { token, repoName, repoOwner } = settings;
+      const notEmptyMessage =
+        message.length > 0 ? message : new Date().toISOString();
 
-      /* Get this from settings */
+      const { token, repoName, repoOwner } = settings;
       const repo = {
         repoName,
         repoOwner,
       };
 
+      const { branch, filename } = fileManager;
+      console.log(branch,filename);
+      console.log(repoOwner, repoName, notEmptyMessage, code);
+
+      // TODO: if branch doesn't exist, we need to create one
+
       const branchData = yield getBranchData(token, repo, branch);
       const lastNodeSha = branchData.object.sha;
+
+      console.log({ lastNodeSha });
 
       const lastCommit = yield getCommitBySha(token, repo, {
         sha: lastNodeSha,
       });
       const prevSha = lastCommit.sha;
+      console.log({ prevSha });
 
       const newTree = yield createCommitNode(token, repo, {
         prevSha,
-        path: "test.cdc",
+        path: filename,
         content: code,
       });
       const commitSha = newTree.sha;
+      console.log({ commitSha });
 
       const commit = yield createCommit(token, repo, {
         prevSha,
         commitSha,
-        message,
+        message: notEmptyMessage,
       });
+
+      console.log({ newSha: commit.sha });
 
       if (commit.sha) {
         const result = yield updateRef(token, repo, {
@@ -87,11 +102,12 @@ export const CommitList = types
       const newCommitModel = Commit.create({
         hash: commit.sha,
         date: commit.committer.date,
-        message,
+        message: notEmptyMessage,
         code,
       });
 
       self.commits = [newCommitModel, ...self.commits];
+      callback();
     }),
   }));
 

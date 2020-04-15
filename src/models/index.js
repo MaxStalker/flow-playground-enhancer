@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree";
+import { types, onPatch } from "mobx-state-tree";
 import { CommitList, commitList } from "./CommitList";
 import { Settings, settings } from "./Settings";
 import { MockRouter, router } from "./MockRouter";
@@ -8,12 +8,20 @@ const Model = types.model({
   commitList: CommitList,
   settings: Settings,
   router: MockRouter,
-  fileManager: FileManager
+  fileManager: FileManager,
 });
 
 export const store = Model.create({
   commitList,
   settings,
   router,
-  fileManager
+  fileManager,
+});
+
+// Subscribe to new filenames
+onPatch(store, (action) => {
+  const { path } = action;
+  if (path === "/fileManager/filename") {
+    commitList.fetchList();
+  }
 });

@@ -5,10 +5,10 @@ import {
   CommitsContainer,
   MainContainer,
   SectionHeader,
-  Title
+  Title,
 } from "./styles";
 import { Action, Spinner } from "./Icons";
-import NewCommit, { BlueText, BoxContainer } from "./NewCommit";
+import NewCommit, { BlueText, BoxContainer, InputBlock } from "./NewCommit";
 import { getBranch, getCode } from "../utils/playground";
 
 class CommitsView extends Component {
@@ -23,12 +23,12 @@ class CommitsView extends Component {
   showCommits = () => {
     const { commitList } = this.props;
     return commitList.commits.length > 0 ? (
-      commitList.commits.map(commit => {
+      commitList.commits.map((commit) => {
         return (
           <Commit
             key={commit.hash}
             commit={commit}
-            replace={code => {
+            replace={(code) => {
               console.log("Commit code is:", code);
             }}
           />
@@ -45,6 +45,11 @@ class CommitsView extends Component {
     const { branch, fileName } = fileManager;
     return (
       <MainContainer>
+        <textarea
+          readOnly
+          id="gh-code-replicator"
+          style={{ display: "none" }}
+        />
         <SectionHeader>
           <Title>Commits</Title>
           <Action
@@ -54,8 +59,6 @@ class CommitsView extends Component {
             }}
           />
         </SectionHeader>
-        <p>{branch}</p>
-        <p>{fileName}</p>
         <NewCommit
           createNew={createNew}
           getCode={getCode}
@@ -78,6 +81,9 @@ class CommitsView extends Component {
   }
 }
 
-export default inject("commitList", "router", "settings", "fileManager")(
-  observer(CommitsView)
-);
+export default inject(
+  "commitList",
+  "router",
+  "settings",
+  "fileManager"
+)(observer(CommitsView));
