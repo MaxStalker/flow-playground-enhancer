@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { GreenButton, GreyButton } from "./Buttons/BasicButton";
 import { Spinner } from "./Icons";
+import EditCommit from "./EditCommit"
 
 const Container = styled.div`
   width: 100%;
@@ -65,13 +66,7 @@ export const InputBlock = styled.div`
 `;
 
 const NewCommit = (props) => {
-  const { createNew } = props;
-  const [message, changeMessage] = useState("new commit");
   const [mode, selectMode] = useState("NEW");
-
-  const onChange = (event) => {
-    changeMessage(event.target.value);
-  };
 
   const reset = () => {
     selectMode("NEW");
@@ -93,38 +88,6 @@ const NewCommit = (props) => {
     );
   };
 
-  const editCommit = () => {
-    const { getCode, getBranch } = props;
-    return (
-      <BoxContainer>
-        <InputBlock mb="20px">
-          <Label>Commit Message:</Label>
-          <Input onChange={onChange} value={message} />
-        </InputBlock>
-        <ButtonArea>
-          <GreyButton onClick={reset}>Cancel</GreyButton>
-          <GreenButton
-            onClick={() => {
-              showProcessing();
-              // const message = "test message";
-              const code = getCode();
-              const branch = getBranch();
-              if (code && branch) {
-                const notEmptyMessage =
-                  message.length > 0 ? message : new Date().toISOString();
-                createNew(branch, notEmptyMessage, code);
-              } else {
-                //TODO: show error maybe...
-              }
-            }}
-          >
-            Commit
-          </GreenButton>
-        </ButtonArea>
-      </BoxContainer>
-    );
-  };
-
   const processing = () => {
     return (
       <BoxContainer onClick={reset}>
@@ -139,7 +102,7 @@ const NewCommit = (props) => {
   return (
     <Container>
       {mode === "NEW" && newCommit()}
-      {mode === "EDIT" && editCommit()}
+      {mode === "EDIT" && <EditCommit actions={[reset, showProcessing]}/>}
       {mode === "PROCESSING" && processing()}
     </Container>
   );

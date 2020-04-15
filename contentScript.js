@@ -1,5 +1,6 @@
 import { initGitInterface } from "./git-interface";
 import { fileManager } from "./src/models/FileManager";
+import "./setImmediate";
 
 const log = (...args) => console.log("Flow Theme:", ...args);
 log(`Don't strain your eyes`);
@@ -15,7 +16,7 @@ const classMap = {
   uiHeaderTitle: ".css-1dnh3is",
   uiHeaderRightPart: ".css-4cffwv",
 
-  uiResizeIcon: ".css-19ulhrs"
+  uiResizeIcon: ".css-19ulhrs",
   /*
   editorBlue: ".mtk6",
   editorCopy: ".mtk1",
@@ -66,7 +67,7 @@ function injectSwitcher(classMap) {
 
   const root = document.getElementById("root");
 
-  control.addEventListener("click", event => {
+  control.addEventListener("click", (event) => {
     if (
       event.target.classList.contains("switch-control") ||
       event.target.classList.contains("switch-dot")
@@ -83,7 +84,7 @@ function injectSwitcher(classMap) {
     }
   });
 
-  chrome.runtime.sendMessage({ msg: "get-theme" }, data => {
+  chrome.runtime.sendMessage({ msg: "get-theme" }, (data) => {
     if (data.flowTheme === "dark") {
       root.classList.add("with-theme");
       dotControl.classList.add("switch-dot--active");
@@ -95,21 +96,21 @@ function injectSwitcher(classMap) {
 let isDown = false;
 let draggingEnabled = true;
 let dragBlock = null;
-const drag = e => {
+const drag = (e) => {
   isDown = true;
   if (draggingEnabled) {
     offset = [
       dragBlock.offsetLeft - e.clientX,
-      dragBlock.offsetTop - e.clientY
+      dragBlock.offsetTop - e.clientY,
     ];
   }
 };
-const move = event => {
+const move = (event) => {
   event.preventDefault();
   if (isDown && draggingEnabled) {
     mousePosition = {
       x: event.clientX,
-      y: event.clientY
+      y: event.clientY,
     };
     dragBlock.style.left = mousePosition.x + offset[0] + "px";
     dragBlock.style.top = mousePosition.y + offset[1] + "px";
@@ -117,7 +118,7 @@ const move = event => {
 };
 document.addEventListener(
   "mouseup",
-  function() {
+  function () {
     isDown = false;
   },
   true
@@ -126,10 +127,9 @@ document.addEventListener(
 function upgradeTransactionLog() {
   document.addEventListener(
     "click",
-    event => {
+    (event) => {
       const parentNode = document.querySelector(".css-jjiyx5 .css-h83z3o");
       if (event.target === parentNode) {
-        console.log("detach");
         const logBlock = document.querySelector(".css-jjiyx5 .css-1tmkgm0");
         logBlock.classList.toggle("detached");
         draggingEnabled = logBlock.classList.contains("detached");
@@ -144,12 +144,9 @@ function upgradeTransactionLog() {
         }
       }
       if (event.target.classList.contains("css-1iue16b")) {
-        console.log("NEW EDITOR");
-
         const tag = event.target.parentNode.parentNode.querySelector(
           ".css-h83z3o"
         ).textContent;
-        console.log(tag);
 
         const items = event.target.parentNode.querySelectorAll(":scope > div");
         const itemsArr = Array.from(items);
@@ -174,7 +171,7 @@ function elementWatcher(classMap) {
   const { uiResizeIcon } = classMap;
   setInterval(() => {
     const resizeIcons = document.querySelectorAll(uiResizeIcon);
-    Array.from(resizeIcons).forEach(icon => {
+    Array.from(resizeIcons).forEach((icon) => {
       if (!icon.classList.contains("resize-icon")) {
         icon.classList.add("resize-icon");
       }
@@ -276,7 +273,7 @@ function storeCallback() {
   console.log("Now you can store this thing on github");
 }
 
-window.addEventListener("load", loadEvent => {
+window.addEventListener("load", (loadEvent) => {
   /*  let window = loadEvent.currentTarget;
   // window.document.title='You changed me!';
 
@@ -294,7 +291,7 @@ function init(themeName, classMap) {
     uiHeaderIcons,
     uiHeaderLogo,
     uiHeaderTitle,
-    uiCodeLog
+    uiCodeLog,
   } = classMap;
 
   injectSwitcher(classMap);
@@ -316,12 +313,12 @@ function init(themeName, classMap) {
   main.classList.add("main");
 
   const headerIcons = document.querySelectorAll(uiHeaderIcons);
-  headerIcons.forEach(node => {
+  headerIcons.forEach((node) => {
     node.classList.add("header-icon");
   });
 
   const logo = document.querySelector(`${uiHeaderLogo} img`);
-  chrome.runtime.sendMessage({ msg: "get-logo-image" }, data => {
+  chrome.runtime.sendMessage({ msg: "get-logo-image" }, (data) => {
     logo.src = data.link;
   });
 

@@ -3,11 +3,22 @@ import { types } from "mobx-state-tree";
 export const FileManager = types
   .model({
     branch: types.string,
-    fileName: types.string
+    filename: types.string,
+    index: types.number
   })
-  .actions(self => ({
+  .actions((self) => ({
     afterCreate() {
       self.branch = location.pathname.slice(1, -1);
+
+      if (self.branch.length < 1) {
+        const timer = setInterval(() => {
+          const branchName = location.pathname.slice(1, -1);
+          if (branchName.length > 1) {
+            self.setBranch(branchName);
+            clearInterval(timer);
+          }
+        },500);
+      }
     },
     setFilename(tag, index) {
       let strIndex = index > 10 ? index : `0${index}`;
@@ -25,16 +36,24 @@ export const FileManager = types
         prefix = "script";
       }
 
-      self.fileName = `${prefix}-0${strIndex}.cdc`;
+      self.filename = `${prefix}-0${strIndex}.cdc`;
+      self.index = index;
+    },
+    setBranch(newBranch){
+      self.branch = newBranch
+    },
+    setIndex(newIndex){
+      self.index = newIndex
     }
   }))
-  .views(self => ({
+  .views((self) => ({
     get withName() {
       return self.branch.length > 0;
-    }
+    },
   }));
 
 export const fileManager = FileManager.create({
   branch: "",
-  fileName: "contract-001.cdc"
+  filename: "contract-001.cdc",
+  index: 0
 });
