@@ -28,9 +28,6 @@ class CommitsView extends Component {
           <Commit
             key={commit.hash}
             commit={commit}
-            replace={(code) => {
-              console.log("Commit code is:", code);
-            }}
           />
         );
       })
@@ -40,11 +37,11 @@ class CommitsView extends Component {
   };
 
   render() {
-    const { commitList, router, fileManager } = this.props;
+    const { commitList, router } = this.props;
     const { isLoaded, createNew } = commitList;
-    const { branch, fileName } = fileManager;
     return (
       <MainContainer>
+        <a id="gh-copy-code-injector" style={{ display: "none" }} />
         <textarea
           readOnly
           id="gh-code-replicator"

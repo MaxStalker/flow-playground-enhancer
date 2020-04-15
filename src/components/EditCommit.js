@@ -71,7 +71,6 @@ class EditCommit extends Component {
             value={message}
             placeholder={"Default: ISO timestamp"}
           />
-          <a id="gh-copy-code-injector" style={{ display: "none" }} />
         </InputBlock>
         <ButtonArea>
           <GreyButton onClick={reset}>Cancel</GreyButton>

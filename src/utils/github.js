@@ -6,7 +6,14 @@ export const getData = async (url, token) => {
       Authorization: `token ${token}`,
     },
   });
-  return response.json();
+
+  if (response.status < 220) {
+    return response.json();
+  } else {
+    return {
+      status: response.status,
+    };
+  }
 };
 
 export const postData = async (url, token, data) => {
@@ -58,14 +65,14 @@ export const getResourceUrl = (resourceName, repo, params = {}) => {
 
     case "commitsByFile":
       return branchSha
-        ? `${baseUrl}/commits?sha=branchSha&path=${filename}`
+        ? `${baseUrl}/commits?sha=${branchSha}&path=${filename}`
         : `${baseUrl}/commits?path=${filename}`;
 
     case "contents":
       return `${baseUrl}/contents/${filename}?ref=${ref}`;
 
-    case 'newBranch':
-      return `${baseUrl}/git/refs`;
+    case "newBranch":
+      return `${baseUrl}/git/refs/heads`;
 
     default:
       return "";
@@ -73,7 +80,7 @@ export const getResourceUrl = (resourceName, repo, params = {}) => {
 };
 
 export const getBranchData = async (token, repo, branch = "master") => {
-  const url = getResourceUrl("master", repo, { branch });
+  const url = getResourceUrl("branchHead", repo, { ref: branch });
   return getData(url, token);
 };
 
@@ -101,7 +108,7 @@ export const createCommitNode = async (token, repo, params) => {
       {
         path,
         content,
-        mode: "100644",
+        mode: "100644"
       },
     ],
   };
@@ -130,10 +137,7 @@ export const updateRef = async (token, repo, params) => {
   return patch(url, token, data);
 };
 
-/*
 export const createBranch = async (token, repo, params) => {
-  const { ref } = params;
-  const url = getResourceUrl("newBranch", repo, params);
-  return postData(url, token, { ref });
+  const url = getResourceUrl("branchHead", repo, params);
+  return postData(url, token, params);
 };
- */
