@@ -11,6 +11,19 @@ export const storeAction = (index, id) => {
   })();`;
 };
 
+export const writeAction = (index, id) => {
+  return `javascript: (function(){
+    const container = document.getElementById("${id}");
+    const code = container.value;
+  
+    const value = window.monaco
+      .editor
+      .getModels()
+      .find(item => item.uri.path === "${index}")
+      .setValue(code);
+  })();`;
+}
+
 export const getCode = () => {
   return "// this is very basic version of contract";
 };

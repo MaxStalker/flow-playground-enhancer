@@ -2,6 +2,7 @@ import { types, flow, onAction } from "mobx-state-tree";
 // For each editor we need a list of commits
 import { Commit } from "./Commit";
 import {
+  createBranch,
   createCommit,
   createCommitNode,
   getBranchCommits,
@@ -23,13 +24,47 @@ export const CommitList = types
       self.isLoaded = false;
 
       const { repoName, repoOwner, token } = settings;
-      const { filename } = fileManager;
+      const { branch, filename } = fileManager;
+      const repo = { repoName, repoOwner };
+
+      const branchData = yield getBranchData(token, repo, branch);
+
+      // TODO: refactor this code to create new branch if it doesn't exist
+      if (branchData.status > 220) {
+        const masterData = yield getBranchData(token, repo);
+        console.log({ masterData });
+        const masterSha = masterData.object.sha;
+        console.log({ masterSha });
+
+        const emptyNode = yield createCommitNode(token, repo, {
+          prevSha: masterSha,
+          path: "README.md",
+          content: branch,
+        });
+        console.log({ emptyNode });
+
+        const newCommit = yield createCommit(token, repo, {
+          prevSha: emptyNode.sha,
+          commitSha: "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          message: `Create empty branch ${branch}`,
+        });
+
+        console.log({ newCommit });
+
+        const newBranchData = yield createBranch(token, repo, {
+          ref: branch,
+          sha: newCommit.sha,
+        });
+        console.log({ newBranchData });
+      }
 
       const response = yield getBranchCommits(
         token,
         { repoName, repoOwner },
         { filename }
       );
+
+      // TODO: Create branch here
 
       self.commits = response.map(({ sha, commit }) => {
         return Commit.create({
@@ -38,6 +73,7 @@ export const CommitList = types
           date: commit.committer.date,
         });
       });
+
       self.isLoaded = true;
     }),
 
@@ -58,21 +94,15 @@ export const CommitList = types
       };
 
       const { branch, filename } = fileManager;
-      console.log(branch,filename);
-      console.log(repoOwner, repoName, notEmptyMessage, code);
 
-      // TODO: if branch doesn't exist, we need to create one
-
-      const branchData = yield getBranchData(token, repo, branch);
+      const [branchData] = yield getBranchData(token, repo, branch);
+      console.log({ branchData });
       const lastNodeSha = branchData.object.sha;
-
-      console.log({ lastNodeSha });
 
       const lastCommit = yield getCommitBySha(token, repo, {
         sha: lastNodeSha,
       });
       const prevSha = lastCommit.sha;
-      console.log({ prevSha });
 
       const newTree = yield createCommitNode(token, repo, {
         prevSha,
@@ -80,7 +110,6 @@ export const CommitList = types
         content: code,
       });
       const commitSha = newTree.sha;
-      console.log({ commitSha });
 
       const commit = yield createCommit(token, repo, {
         prevSha,
@@ -91,9 +120,13 @@ export const CommitList = types
       console.log({ newSha: commit.sha });
 
       if (commit.sha) {
+        console.log({commitSha});
+
         const result = yield updateRef(token, repo, {
+          ref: branch,
           newCommitSha: commit.sha,
         });
+
         console.log({ result });
       } else {
         console.log("Commit SHA was not found");

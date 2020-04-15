@@ -33,17 +33,16 @@ const Date = styled.p`
   margin-bottom: 1em !important;
 `;
 
-export const Commit = props => {
-  const { commit, replace } = props;
-  const { message, date, code } = commit;
-  const { getCode, fetchAndReplace } = commit;
+export const Commit = (props) => {
+  const { commit } = props;
+  const { message, date, fetchAndReplace } = commit;
   return (
     <Container>
       <TextBlock>
         <Date>{date}</Date>
         <Message>{message}</Message>
       </TextBlock>
-      <LoadCommit onClick={() => fetchAndReplace(replace)} />
+      <LoadCommit onClick={fetchAndReplace} />
     </Container>
   );
 };

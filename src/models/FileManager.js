@@ -42,7 +42,7 @@ export const FileManager = types
     setBranch(newBranch){
       self.branch = newBranch
     },
-    setIndex(newIndex){
+    setIndex(newIndex){``
       self.index = newIndex
     }
   }))
