@@ -21,6 +21,11 @@ export const CommitList = types
   })
   .actions((self) => ({
     fetchList: flow(function* () {
+      // TODO: Check that branch value is not empty,
+      //  so we won't fetch list for not saved playground
+      // Or we can fetch a list of available branches and if current one
+      // is not present there, then we show button to create new branch
+
       self.isLoaded = false;
 
       const { repoName, repoOwner, token } = settings;
@@ -29,33 +34,10 @@ export const CommitList = types
 
       const branchData = yield getBranchData(token, repo, branch);
 
-      // TODO: refactor this code to create new branch if it doesn't exist
-      if (branchData.status > 220) {
-        const masterData = yield getBranchData(token, repo);
-        console.log({ masterData });
-        const masterSha = masterData.object.sha;
-        console.log({ masterSha });
+      console.log(branchData);
 
-        const emptyNode = yield createCommitNode(token, repo, {
-          prevSha: masterSha,
-          path: "README.md",
-          content: branch,
-        });
-        console.log({ emptyNode });
-
-        const newCommit = yield createCommit(token, repo, {
-          prevSha: emptyNode.sha,
-          commitSha: "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
-          message: `Create empty branch ${branch}`,
-        });
-
-        console.log({ newCommit });
-
-        const newBranchData = yield createBranch(token, repo, {
-          ref: branch,
-          sha: newCommit.sha,
-        });
-        console.log({ newBranchData });
+      if (branchData.status === 404) {
+        yield self.initNewBranch();
       }
 
       const response = yield getBranchCommits(
@@ -76,7 +58,53 @@ export const CommitList = types
 
       self.isLoaded = true;
     }),
+    initNewBranch: flow(function* () {
+      const { repoName, repoOwner, token } = settings;
+      const { branch } = fileManager;
+      const repo = { repoName, repoOwner };
 
+      const masterData = yield getBranchData(token, repo);
+      const masterSha = masterData.object.sha;
+
+      const ref = `refs/heads/${branch}`;
+      const newBranchRef = yield createBranch(token, repo, {
+        sha: masterSha,
+        ref,
+      });
+
+      const newBranchSha = newBranchRef.object.sha;
+
+      // Prepare data for commit
+      const [_, uuid] = branch.split("/");
+      const message = `Update README.md with link to playground`;
+      const content = `This branch stores your commits from 
+        [Flow Playground](https://play.onflow.org/${uuid})`;
+      const path = "README.md";
+
+      // Commit README.md file here
+      const readmeCommit = yield self.commitFile(message, content, path, {
+        sha: newBranchSha,
+      });
+
+      console.log({ readmeCommit });
+      /*
+
+
+      const readmeNode = yield createCommitNode(token, repo, {
+        prevSha: newBranchSha,
+        path: "README.md",
+        content
+      });
+
+      const newCommit = yield createCommit(token, repo, {
+        prevSha: newBranchSha,
+        commitSha: readmeNode.sha,
+        message: `Update README.md with link to playground`,
+      });
+
+      console.log({ newCommit });
+      */
+    }),
     createNew: flow(function* (message, code, callback) {
       /* We can create commit here, so it will be shown in UI
       const newCommit = Commit.create({
@@ -84,6 +112,22 @@ export const CommitList = types
       });
       */
 
+      const { branch, filename } = fileManager;
+      // Commit new file to repository
+      const commit = yield self.commitFile(message, code, filename, { branch });
+
+      const newCommitModel = Commit.create({
+        hash: commit.sha,
+        date: commit.committer.date,
+        message: notEmptyMessage,
+        code,
+      });
+
+      self.commits = [newCommitModel, ...self.commits];
+      callback();
+    }),
+    commitFile: flow(function* (message, content, path, branchOrSha) {
+      // we need to return commit from here
       const notEmptyMessage =
         message.length > 0 ? message : new Date().toISOString();
 
@@ -93,11 +137,13 @@ export const CommitList = types
         repoOwner,
       };
 
-      const { branch, filename } = fileManager;
-
-      const [branchData] = yield getBranchData(token, repo, branch);
-      console.log({ branchData });
-      const lastNodeSha = branchData.object.sha;
+      let lastNodeSha = null;
+      if (branchOrSha.branch) {
+        const branchData = yield getBranchData(token, repo, branch);
+        lastNodeSha = branchData.object.sha;
+      } else {
+        lastNodeSha = branchOrSha.sha;
+      }
 
       const lastCommit = yield getCommitBySha(token, repo, {
         sha: lastNodeSha,
@@ -106,8 +152,8 @@ export const CommitList = types
 
       const newTree = yield createCommitNode(token, repo, {
         prevSha,
-        path: filename,
-        content: code,
+        path,
+        content,
       });
       const commitSha = newTree.sha;
 
@@ -120,7 +166,7 @@ export const CommitList = types
       console.log({ newSha: commit.sha });
 
       if (commit.sha) {
-        console.log({commitSha});
+        console.log({ commitSha });
 
         const result = yield updateRef(token, repo, {
           ref: branch,
@@ -131,16 +177,7 @@ export const CommitList = types
       } else {
         console.log("Commit SHA was not found");
       }
-
-      const newCommitModel = Commit.create({
-        hash: commit.sha,
-        date: commit.committer.date,
-        message: notEmptyMessage,
-        code,
-      });
-
-      self.commits = [newCommitModel, ...self.commits];
-      callback();
+      return commit;
     }),
   }));
 

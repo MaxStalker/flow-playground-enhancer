@@ -8,16 +8,18 @@ export const FileManager = types
   })
   .actions((self) => ({
     afterCreate() {
-      self.branch = location.pathname.slice(1, -1);
+      const pathname = location.pathname.slice(1);
 
-      if (self.branch.length < 1) {
+      if (pathname.length < 1) {
         const timer = setInterval(() => {
-          const branchName = location.pathname.slice(1, -1);
+          const branchName = location.pathname.slice(1);
           if (branchName.length > 1) {
             self.setBranch(branchName);
             clearInterval(timer);
           }
         },500);
+      } else {
+        self.setBranch(pathname);
       }
     },
     setFilename(tag, index) {
@@ -40,7 +42,7 @@ export const FileManager = types
       self.index = index;
     },
     setBranch(newBranch){
-      self.branch = newBranch
+      self.branch = `playground/${newBranch}`
     },
     setIndex(newIndex){``
       self.index = newIndex

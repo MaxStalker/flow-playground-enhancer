@@ -72,7 +72,7 @@ export const getResourceUrl = (resourceName, repo, params = {}) => {
       return `${baseUrl}/contents/${filename}?ref=${ref}`;
 
     case "newBranch":
-      return `${baseUrl}/git/refs/heads`;
+      return `${baseUrl}/git/refs`;
 
     default:
       return "";
@@ -138,6 +138,6 @@ export const updateRef = async (token, repo, params) => {
 };
 
 export const createBranch = async (token, repo, params) => {
-  const url = getResourceUrl("branchHead", repo, params);
+  const url = getResourceUrl("newBranch", repo, params);
   return postData(url, token, params);
 };
