@@ -67,9 +67,13 @@ export const CommitList = types
       const masterData = yield getBranchData(token, repo);
       const masterSha = masterData.object.sha;
 
+      const lastCommit = yield getCommitBySha(token, repo, {
+        sha: masterSha,
+      });
+
       const ref = `refs/heads/${branch}`;
       const newBranchRef = yield createBranch(token, repo, {
-        sha: masterSha,
+        sha: lastCommit.sha,
         ref,
       });
 
@@ -83,10 +87,7 @@ export const CommitList = types
       const path = "README.md";
 
       // Commit README.md file here
-      const readmeCommit = yield self.commitFile(message, content, path, {
-        sha: newBranchSha,
-      });
-
+      const readmeCommit = yield self.commitFile(message, content, path, branch);
       console.log({ readmeCommit });
       /*
 
@@ -115,7 +116,7 @@ export const CommitList = types
 
       const { branch, filename } = fileManager;
       // Commit new file to repository
-      const commit = yield self.commitFile(message, code, filename, { branch });
+      const commit = yield self.commitFile(message, code, filename, branch);
 
       const newCommitModel = Commit.create({
         hash: commit.sha,
@@ -127,7 +128,7 @@ export const CommitList = types
       self.commits = [newCommitModel, ...self.commits];
       callback();
     }),
-    commitFile: flow(function* (message, content, path, branchOrSha) {
+    commitFile: flow(function* (message, content, path, branch) {
       // we need to return commit from here
       const notEmptyMessage =
         message.length > 0 ? message : new Date().toISOString();
@@ -138,13 +139,17 @@ export const CommitList = types
         repoOwner,
       };
 
+      /*
       let lastNodeSha = null;
       if (branchOrSha.branch) {
-        const branchData = yield getBranchData(token, repo, branch);
+
         lastNodeSha = branchData.object.sha;
       } else {
         lastNodeSha = branchOrSha.sha;
       }
+      */
+      const branchData = yield getBranchData(token, repo, branch);
+      const lastNodeSha = branchData.object.sha;
 
       const lastCommit = yield getCommitBySha(token, repo, {
         sha: lastNodeSha,
