@@ -59,6 +59,7 @@ export const CommitList = types
       self.isLoaded = true;
     }),
     initNewBranch: flow(function* () {
+      // TODO: We made a copy to master, but not new empty branch...
       const { repoName, repoOwner, token } = settings;
       const { branch } = fileManager;
       const repo = { repoName, repoOwner };
@@ -119,7 +120,7 @@ export const CommitList = types
       const newCommitModel = Commit.create({
         hash: commit.sha,
         date: commit.committer.date,
-        message: notEmptyMessage,
+        message: message, // TODO: get message from response...
         code,
       });
 
