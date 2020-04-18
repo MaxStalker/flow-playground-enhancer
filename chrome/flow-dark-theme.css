@@ -356,4 +356,31 @@
   }
 }
 
+.with-theme .css-fj0s33 {
+  color: #6a728e;
+  background-color: var(--theme-editor-bg);
+}
+.with-theme .css-fj0s33 {
+  color: #6a728e;
+}
+.with-theme .css-fj0s33 {
+  cursor: pointer;
+}
+.with-theme .css-fj0s33:hover {
+  background-color: var(--theme-code-margin-bg);
+}
+
+.with-theme .css-1i9h1r, .with-theme .css-1i9h1r:hover {
+  background-color: var(--theme-sidebar-selection);
+  color: var(--bright-green);
+}
+
+.with-theme .css-jjiyx5 pre,
+.with-theme .css-t2kxtv,
+.with-theme .css-5zo0ir::before,
+.with-theme .css-xt6qbs::before,
+.with-theme .css-30uyui::before {
+  color: var(--yellow);
+}
+
 /*# sourceMappingURL=flow-dark-theme.css.map */
