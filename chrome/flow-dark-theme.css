@@ -383,4 +383,8 @@
   color: var(--yellow);
 }
 
+.with-theme .css-1ogaoz:hover {
+    background-color: var(--theme-code-margin-bg);
+}
+
 /*# sourceMappingURL=flow-dark-theme.css.map */
