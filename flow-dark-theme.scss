@@ -408,8 +408,8 @@
 }
 
 // Hide tutorial button on small screens
-@media only screen and (max-width: 1080px) {
-  .css-1ogaoz {
+@media only screen and (max-width: 1360px) {
+  .css-1ogaoz, .css-1dnh3is.header-title {
     display:none !important;
   }
 }
