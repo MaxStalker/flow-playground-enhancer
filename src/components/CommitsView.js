@@ -6,6 +6,7 @@ import {
   MainContainer,
   SectionHeader,
   Title,
+  Empty
 } from "./styles";
 import { Action, Spinner } from "./Icons";
 import NewCommit, { BlueText, BoxContainer, InputBlock } from "./NewCommit";
@@ -23,16 +24,11 @@ class CommitsView extends Component {
   showCommits = () => {
     const { commitList } = this.props;
     return commitList.commits.length > 0 ? (
-      commitList.commits.map((commit) => {
-        return (
-          <Commit
-            key={commit.hash}
-            commit={commit}
-          />
-        );
+      commitList.commits.map(commit => {
+        return <Commit key={commit.hash} commit={commit} />;
       })
     ) : (
-      <p>No commits for this file</p>
+      <Empty>No commits for this file</Empty>
     );
   };
 
@@ -78,9 +74,6 @@ class CommitsView extends Component {
   }
 }
 
-export default inject(
-  "commitList",
-  "router",
-  "settings",
-  "fileManager"
-)(observer(CommitsView));
+export default inject("commitList", "router", "settings", "fileManager")(
+  observer(CommitsView)
+);
