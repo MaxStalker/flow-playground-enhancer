@@ -79,3 +79,12 @@ export const CommitsContainer = styled.div`
   height: 100%;
   overflow: auto;
 `;
+
+export const Empty = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  width: 100%;
+  color: #aaa;
+`;
