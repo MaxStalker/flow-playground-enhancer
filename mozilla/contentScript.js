@@ -29,11 +29,11 @@ const watcher = setInterval(() => {
 }, 1000);
 
 function getTheme(callback) {
-  chrome.runtime.sendMessage({ msg: "get-theme" }, callback);
+  browser.runtime.sendMessage({ msg: "get-theme" }, callback);
 }
 
 function setTheme(theme) {
-  chrome.runtime.sendMessage({ msg: "store-theme-selection", theme });
+  browser.runtime.sendMessage({ msg: "store-theme-selection", theme });
 }
 
 function injectSwitcher(classMap) {
@@ -79,7 +79,7 @@ function injectSwitcher(classMap) {
     }
   });
 
-  chrome.runtime.sendMessage({ msg: "get-theme" }, (data)=> {
+  browser.runtime.sendMessage({ msg: "get-theme" }, (data)=> {
     console.log('some data here', data);
     if (data.flowTheme === "dark") {
       root.classList.add("with-theme");
@@ -191,7 +191,7 @@ function init(themeName, classMap) {
   });
 
   const logo = document.querySelector(`${uiHeaderLogo} img`);
-  chrome.runtime.sendMessage({ msg: "get-logo-image" }, data => {
+  browser.runtime.sendMessage({ msg: "get-logo-image" }, data => {
     logo.src = data.link;
   });
 
