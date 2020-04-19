@@ -163,39 +163,41 @@
   border-color: var(--theme-editor-cursor);
   color: var(--theme-sidebar-bg);
 }
-.with-theme .monaco-editor .css-fj0s33 {
+.with-theme .css-fj0s33 {
   color: #6a728e;
   background-color: var(--theme-editor-bg);
 }
-.with-theme .monaco-editor .css-fj0s33 {
+.with-theme .css-fj0s33 {
   color: #6a728e;
 }
-.with-theme .monaco-editor .css-fj0s33 {
+.with-theme .css-fj0s33 {
   cursor: pointer;
 }
-.with-theme .monaco-editor .css-fj0s33:hover {
+.with-theme .css-fj0s33:hover {
   background-color: var(--theme-code-margin-bg);
 }
-.with-theme .monaco-editor .css-1i9h1r, .with-theme .monaco-editor .css-1i9h1r:hover {
+.with-theme .css-1i9h1r, .with-theme .css-1i9h1r:hover {
   background-color: var(--theme-sidebar-selection);
   color: var(--bright-green);
 }
-.with-theme .monaco-editor .css-jjiyx5 pre,
-.with-theme .monaco-editor .css-t2kxtv,
-.with-theme .monaco-editor .css-5zo0ir::before,
-.with-theme .monaco-editor .css-xt6qbs::before,
-.with-theme .monaco-editor .css-30uyui::before {
-  color: var(--yellow);
+.with-theme .css-jjiyx5 pre,
+.with-theme .css-t2kxtv,
+.with-theme .css-5zo0ir::before,
+.with-theme .css-xt6qbs::before,
+.with-theme .css-30uyui::before {
+  color: var(--theme-deployment-result);
 }
-.with-theme .monaco-editor .css-1ogaoz:hover {
+.with-theme .css-1ogaoz:hover {
   background-color: var(--theme-code-margin-bg);
 }
-.with-theme .monaco-editor .css-1ogaoz:hover {
+.with-theme .css-1ogaoz:hover {
   background-color: var(--theme-code-margin-bg);
 }
-.with-theme .css-g2pw1o {
+.with-theme .css-g2pw1o,
+.with-theme .css-jjiyx5 {
   color: var(--theme-deployment-result);
   background-color: var(--theme-header-bg) !important;
+  fill: var(--theme-header-bg) !important;
 }
 .with-theme .css-1otvrdq {
   color: var(--theme-deployed-resources);

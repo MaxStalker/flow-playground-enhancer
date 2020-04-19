@@ -80,7 +80,6 @@ function injectSwitcher(classMap) {
   });
 
   chrome.runtime.sendMessage({ msg: "get-theme" }, (data)=> {
-    console.log('some data here', data);
     if (data.flowTheme === "dark") {
       root.classList.add("with-theme");
       dotControl.classList.add("switch-dot--active");
@@ -120,11 +119,8 @@ document.addEventListener('mouseup', function() {
 
 function upgradeTransactionLog(){
   document.addEventListener('click', (event)=>{
-    console.log('click');
-    console.log(event.target);
     const parentNode = document.querySelector('.css-jjiyx5 .css-h83z3o');
     if (event.target === parentNode){
-      console.log("detach")
       const logBlock = document.querySelector(".css-jjiyx5 .css-1tmkgm0");
       logBlock.classList.toggle("detached");
       draggingEnabled = logBlock.classList.contains("detached")
@@ -146,7 +142,6 @@ function elementWatcher(classMap) {
   const {uiResizeIcon} = classMap;
   setInterval(()=>{
     const resizeIcons = document.querySelectorAll(uiResizeIcon);
-    console.log(resizeIcons);
     Array.from(resizeIcons).forEach(icon =>{
       if (!icon.classList.contains("resize-icon")){
         icon.classList.add("resize-icon");

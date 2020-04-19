@@ -228,10 +228,48 @@
 
   }
 
+  .css-fj0s33 {
+    color: #6a728e;
+    background-color: var(--theme-editor-bg);
+  }
+  .css-fj0s33 {
+    color: #6a728e;
+  }
+  .css-fj0s33 {
+    cursor: pointer;
+  }
+  .css-fj0s33:hover {
+    background-color: var(--theme-code-margin-bg);
+  }
+
+  .css-1i9h1r, .css-1i9h1r:hover {
+    background-color: var(--theme-sidebar-selection);
+    color: var(--bright-green);
+  }
+
+  .css-jjiyx5 pre,
+  .css-t2kxtv,
+  .css-5zo0ir::before,
+  .css-xt6qbs::before,
+  .css-30uyui::before {
+    color: var(--theme-deployment-result);
+  }
+
+  .css-1ogaoz:hover {
+    background-color: var(--theme-code-margin-bg);
+  }
+
+  .css-1ogaoz:hover {
+    background-color: var(--theme-code-margin-bg);
+  }
+
   /* Deployed result */
-  .css-g2pw1o {
+  .css-g2pw1o,
+  .css-jjiyx5
+  {
     color: var(--theme-deployment-result);
     background-color: var(--theme-header-bg) !important;
+    fill: var(--theme-header-bg) !important;
   }
 
   /* Deployed resources */
