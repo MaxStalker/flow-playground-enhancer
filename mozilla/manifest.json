@@ -21,8 +21,7 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "starkaindustries@gmail.com",
-      "strict_min_version": "42.0"
+      "id": "starkaindustries@gmail.com"
     }
   },
 
