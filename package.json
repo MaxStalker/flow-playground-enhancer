@@ -14,12 +14,13 @@
     "sass": "^1.26.3"
   },
   "dependencies": {
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
+    "mobx-state-tree": "^3.15.0",
     "react": ">= 16.8.0",
     "react-dom": ">= 16.8.0",
     "react-is": ">= 16.8.0",
-    "styled-components": "^5.1.0",
-    "mobx": "^5.15.4",
-    "mobx-react": "^6.2.2",
-    "mobx-state-tree": "^3.15.0"
+    "react-select": "^3.1.0",
+    "styled-components": "^5.1.0"
   }
 }
