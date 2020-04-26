@@ -4,7 +4,7 @@ export const FileManager = types
   .model({
     branch: types.string,
     filename: types.string,
-    index: types.number
+    index: types.number,
   })
   .actions((self) => ({
     afterCreate() {
@@ -17,7 +17,7 @@ export const FileManager = types
             self.setBranch(branchName);
             clearInterval(timer);
           }
-        },500);
+        }, 500);
       } else {
         self.setBranch(pathname);
       }
@@ -41,12 +41,16 @@ export const FileManager = types
       self.filename = `${prefix}-0${strIndex}.cdc`;
       self.index = index;
     },
-    setBranch(newBranch){
-      self.branch = `playground/${newBranch}`
+    updateFilename(newFileName) {
+      self.filename = newFileName;
     },
-    setIndex(newIndex){``
-      self.index = newIndex
-    }
+    setBranch(newBranch) {
+      self.branch = `playground/${newBranch}`;
+    },
+    setIndex(newIndex) {
+      ``;
+      self.index = newIndex;
+    },
   }))
   .views((self) => ({
     get withName() {
@@ -57,5 +61,5 @@ export const FileManager = types
 export const fileManager = FileManager.create({
   branch: "",
   filename: "contract-001.cdc",
-  index: 0
+  index: 0,
 });
