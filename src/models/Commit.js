@@ -2,7 +2,7 @@ import { types, flow } from "mobx-state-tree";
 import { getFileContents } from "../utils/github";
 import { settings } from "./Settings";
 import { fileManager } from "./FileManager";
-import {storeAction, writeAction} from "../utils/playground"
+import { storeAction, writeAction } from "../utils/playground";
 
 export const Commit = types
   .model({
