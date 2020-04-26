@@ -6,25 +6,25 @@ import {
   MainContainer,
   SectionHeader,
   Title,
-  Empty
+  Empty,
 } from "./styles";
 import { Action, Spinner } from "./Icons";
 import NewCommit, { BlueText, BoxContainer, InputBlock } from "./NewCommit";
 import { getBranch, getCode } from "../utils/playground";
 
 class CommitsView extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     const { commitList, settings } = this.props;
     const { initialized } = settings;
     if (initialized) {
-      commitList.fetchList();
+      await commitList.fetchFileList();
     }
   }
 
   showCommits = () => {
     const { commitList } = this.props;
     return commitList.commits.length > 0 ? (
-      commitList.commits.map(commit => {
+      commitList.commits.map((commit) => {
         return <Commit key={commit.hash} commit={commit} />;
       })
     ) : (
@@ -33,8 +33,9 @@ class CommitsView extends Component {
   };
 
   render() {
-    const { commitList, router } = this.props;
-    const { isLoaded, createNew } = commitList;
+    const { commitList, router, fileManager } = this.props;
+    const { loading, createNew, cadenceFiles } = commitList;
+    const { filename } = fileManager;
     return (
       <MainContainer>
         <a id="gh-copy-code-injector" style={{ display: "none" }} />
@@ -52,21 +53,41 @@ class CommitsView extends Component {
             }}
           />
         </SectionHeader>
+        {cadenceFiles.length > 0 && (
+          <div>
+            <p>{filename}</p>
+            <select
+              value={filename}
+              onChange={(event) => {
+                const newFile = event.target.value;
+                fileManager.updateFilename(newFile);
+              }}
+            >
+              {cadenceFiles.map((file) => {
+                return (
+                  <option key={file.name} value={file.name}>
+                    {file.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        )}
         <NewCommit
           createNew={createNew}
           getCode={getCode}
           getBranch={getBranch}
         />
         <CommitsContainer>
-          {isLoaded ? (
-            this.showCommits()
-          ) : (
+          {loading ? (
             <BoxContainer>
               <BlueText>
                 <Spinner />
                 <p>Loading commits...</p>
               </BlueText>
             </BoxContainer>
+          ) : (
+            this.showCommits()
           )}
         </CommitsContainer>
       </MainContainer>
@@ -74,6 +95,9 @@ class CommitsView extends Component {
   }
 }
 
-export default inject("commitList", "router", "settings", "fileManager")(
-  observer(CommitsView)
-);
+export default inject(
+  "commitList",
+  "router",
+  "settings",
+  "fileManager"
+)(observer(CommitsView));
