@@ -30,11 +30,13 @@ export const CommitList = types
       // Or we can fetch a list of available branches and if current one
       // is not present there, then we show button to create new branch
 
-      self.isLoaded = false;
+      self.loading = true;
 
       const { repoName, repoOwner, token } = settings;
       const { branch, filename } = fileManager;
       const repo = { repoName, repoOwner };
+
+      self.checkFilename(filename);
 
       const branchData = yield getBranchData(token, repo, branch);
 
@@ -63,7 +65,7 @@ export const CommitList = types
         });
       });
 
-      self.isLoaded = true;
+      self.loading = false;
     }),
     initNewBranch: flow(function* () {
       // TODO: We made a copy to master, but not new empty branch...
@@ -100,7 +102,6 @@ export const CommitList = types
         path,
         branch
       );
-
     }),
     createNew: flow(function* (message, code, callback) {
       /* We can create commit here, so it will be shown in UI
@@ -207,6 +208,72 @@ export const CommitList = types
         self.fetchList(fileName);
       }
     }),
+    checkFilename: (filename) => {
+      if (!self.cadenceFiles.find((item) => item.name === filename)) {
+        self.cadenceFiles.push(
+          FileRef.create({
+            name: filename,
+          })
+        );
+      }
+    },
+  }))
+  .views((self) => ({
+    get fileList() {
+      return self.cadenceFiles
+        .sort((a, b) => {
+          return a > b;
+        })
+        .map((file) => {
+          return {
+            value: file.name,
+            label: file.name,
+          };
+        });
+    },
+    get fileListGroups() {
+      // TODO: make actual use of colors
+      return self.fileList.reduce(
+        (acc, item) => {
+          const { label } = item;
+          if (label.includes("contract")) {
+            acc[0].options.push({ ...item, color: "#67ba29" });
+          } else if (label.includes("transaction")) {
+            acc[1].options.push({ ...item, color: "#1488d7" });
+          } else if (label.includes("script")) {
+            acc[2].options.push({ ...item, color: "#FF8B00" });
+          } else {
+            acc[3].options.push({ ...item, color: "#d54fec" });
+          }
+
+          return acc;
+        },
+        [
+          {
+            label: "Contracts",
+            options: [],
+          },
+          {
+            label: "Transactions",
+            options: [],
+          },
+          {
+            label: "Scripts",
+            options: [],
+          },
+          {
+            label: "Custom",
+            options: [],
+          },
+        ]
+      );
+    },
+    get defaultValue(){
+      return {
+        value: fileManager.filename,
+        label: fileManager.filename,
+      }
+    }
   }));
 
 export const commitList = CommitList.create({
