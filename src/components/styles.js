@@ -24,6 +24,11 @@ export const MainContainer = styled.div`
   }
 `;
 
+export const SelectContainer = styled.div`
+  width: 100%;
+  padding: 0 1rem;
+`;
+
 export const SectionHeader = styled.div`
   display: flex;
   align-items: center;
