@@ -78,7 +78,6 @@ class EditCommit extends Component {
             onClick={() => {
               const replicator = document.getElementById("gh-code-replicator");
               const code = replicator.value;
-              console.log("Current code value", code);
 
               showProcessing();
               if (code) {
