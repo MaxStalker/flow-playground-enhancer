@@ -59,7 +59,7 @@ export const FileManager = types
       ``;
       self.index = newIndex;
     },
-    loadBranchNames: flow(function*() {
+    loadBranchNames: flow(function* () {
       const { token, repoOwner, repoName } = settings;
       const repo = { repoOwner, repoName };
 
@@ -82,8 +82,15 @@ export const FileManager = types
     get withName() {
       return self.branch.length > 0;
     },
-    get branchList(){
-      return self.branches.
+    get branchList() {
+      const items = self.branches.entries();
+      return Array.from(items).map(branch => {
+        const [_, { id, name }] = branch;
+        return {
+          value: id,
+          label: name
+        };
+      });
     }
   }));
 
