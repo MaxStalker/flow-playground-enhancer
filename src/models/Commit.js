@@ -10,19 +10,15 @@ export const Commit = types
     hash: types.optional(types.string, ""),
     date: types.optional(types.string, ""),
     code: types.optional(types.string, ""),
-    loading: types.optional(types.boolean, false),
+    loading: types.optional(types.boolean, false)
   })
-  .actions((self) => ({
+  .actions(self => ({
     getCode: flow(function* () {
       self.loading = true;
 
-      const { token, repoName, repoOwner } = settings;
+      const { token, repo } = settings;
       const { filename } = fileManager;
-      const fileData = yield getFileContents(
-        token,
-        { repoName, repoOwner },
-        { filename, ref: self.hash }
-      );
+      const fileData = yield getFileContents(token, repo, { filename, ref: self.hash });
 
       self.code = atob(fileData.content);
       self.loading = false;
@@ -34,14 +30,12 @@ export const Commit = types
       const replicator = document.getElementById("gh-code-replicator");
       replicator.value = self.code;
 
-      const { uri } = document.querySelector(
-        "#cadenceEditor .monaco-editor"
-      ).dataset;
+      const { uri } = document.querySelector("#cadenceEditor .monaco-editor").dataset;
       const [_, editorIndex] = uri.split("inmemory://model");
       const copyCode = writeAction(editorIndex, "gh-code-replicator");
 
       const injector = document.getElementById("gh-copy-code-injector");
       injector.href = copyCode;
       injector.click();
-    }),
+    })
   }));

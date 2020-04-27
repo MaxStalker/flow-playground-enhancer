@@ -6,13 +6,9 @@ import Blank from "./Blank"
 
 class AppRender extends Component {
   render() {
-    const { router, settings, fileManager } = this.props;
+    const { router, settings } = this.props;
     const { view } = router;
     const { initialized } = settings;
-
-    if (!fileManager.branch){
-      return <Blank/>
-    }
 
     if (view === "COMMITS" && initialized) {
       return <CommitsView />;

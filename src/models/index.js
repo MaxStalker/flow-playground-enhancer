@@ -20,8 +20,13 @@ export const store = Model.create({
 
 // Subscribe to new filenames
 onPatch(store, (action) => {
+  console.log({action});
   const { path } = action;
   if (path === "/fileManager/filename") {
     commitList.fetchList();
+  }
+
+  if (path === "/settings/branchName"){
+    commitList.fetchFileList();
   }
 });

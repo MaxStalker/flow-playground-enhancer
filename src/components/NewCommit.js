@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { GreenButton, GreyButton } from "./Buttons/BasicButton";
 import { Spinner } from "./Icons";
-import EditCommit from "./EditCommit"
+import EditCommit from "./EditCommit";
 
 const Container = styled.div`
   width: 100%;
@@ -11,9 +11,10 @@ const Container = styled.div`
 `;
 
 export const BoxContainer = styled.div`
-  padding: 1rem;
+  padding: 0 1rem;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 1rem;
 `;
 
 export const ButtonArea = styled.div`
@@ -46,14 +47,15 @@ export const Label = styled.p`
   font-size: 14px;
 `;
 
-export const Input = styled.input.attrs((props) => ({
-  type: props.type || "text",
+export const Input = styled.input.attrs(props => ({
+  type: props.type || "text"
 }))`
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
   border-radius: 4px;
   border: 1px solid #a5a5a5;
+  margin-bottom: ${({ mb = 0 }) => mb};
 `;
 
 export const InputBlock = styled.div`
@@ -65,7 +67,7 @@ export const InputBlock = styled.div`
   }
 `;
 
-const NewCommit = (props) => {
+const NewCommit = props => {
   const [mode, selectMode] = useState("NEW");
 
   const reset = () => {
@@ -102,7 +104,7 @@ const NewCommit = (props) => {
   return (
     <Container>
       {mode === "NEW" && newCommit()}
-      {mode === "EDIT" && <EditCommit actions={[reset, showProcessing]}/>}
+      {mode === "EDIT" && <EditCommit actions={[reset, showProcessing]} />}
       {mode === "PROCESSING" && processing()}
     </Container>
   );

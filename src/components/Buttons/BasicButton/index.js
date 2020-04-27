@@ -11,7 +11,7 @@ const BasicButton = styled.button`
   cursor: pointer;
   color: #065630;
   font-weight: 700;
-  font-size: 14px;
+  font-size: ${({ fs = "14px" }) => fs};
   width: 100%;
   text-align: center;
   &:disabled {
@@ -19,8 +19,7 @@ const BasicButton = styled.button`
     opacity: 0.3;
   }
   &:hover {
-    background-color: ${({ disabled = false }) =>
-      disabled ? "#00fb83" : "#29f563"};
+    background-color: ${({ disabled = false }) => (disabled ? "#00fb83" : "#29f563")};
   }
 `;
 

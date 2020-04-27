@@ -5,6 +5,7 @@ import { inject, observer } from "mobx-react";
 import styled from "styled-components";
 import { ButtonArea, InputBlock, Input, Label } from "./NewCommit";
 import { GreenButton, GreyButton } from "./Buttons/BasicButton";
+import BranchSelector from "./BranchSelector"
 
 const SettingsContainer = styled.div`
   width: 100%;
@@ -14,29 +15,25 @@ const SettingsContainer = styled.div`
 
 const Settings = props => {
   const { router, settings } = props;
-  const { initialized, repoOwner, repoName, token } = settings;
-  const { setToken, setRepoOwner, setRepoName } = settings;
+  const { initialized, repoOwner, repoName, token, repoUrl } = settings;
+  const { setToken, setRepoUrl } = settings;
 
   const [owner, changeOwner] = useState(repoOwner);
   const [name, changeName] = useState(repoName);
   const [tokenValue, changeToken] = useState(token);
+  const [url, changeUrl] = useState(repoUrl);
 
-  const handleOwner = event => {
-    changeOwner(event.target.value);
-  };
-
-  const handleName = event => {
-    changeName(event.target.value);
-  };
+  const handleUrl = event => {
+    changeUrl(event.target.value)
+  }
 
   const handleToken = event => {
     changeToken(event.target.value);
   };
 
   const save = () => {
-    setRepoOwner(owner);
-    setRepoName(name);
     setToken(tokenValue);
+    setRepoUrl(url);
     if (initialized) {
       router.goTo("COMMITS");
     }
@@ -54,13 +51,8 @@ const Settings = props => {
       </SectionHeader>
       <SettingsContainer>
         <InputBlock>
-          <Label>Repository Owner</Label>
-          <Input value={owner} onChange={handleOwner} />
-        </InputBlock>
-
-        <InputBlock>
-          <Label>Repository Name</Label>
-          <Input value={name} onChange={handleName} />
+          <Label>Repository URL</Label>
+          <Input value={url} onChange={handleUrl} />
         </InputBlock>
 
         <InputBlock mb="32px">

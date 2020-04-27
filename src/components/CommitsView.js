@@ -11,16 +11,18 @@ import {
   Empty
 } from "./styles";
 import { Action, Spinner } from "./Icons";
-import NewCommit, { BlueText, BoxContainer, InputBlock } from "./NewCommit";
+import NewCommit, { BlueText, BoxContainer, InputBlock, Label } from "./NewCommit";
 import { getBranch, getCode } from "../utils/playground";
+import { settings } from "../models/Settings";
+import BranchSelector from "./BranchSelector"
 
 class CommitsView extends Component {
   async componentDidMount() {
-    const { commitList, settings, fileManager } = this.props;
+    const { commitList, settings } = this.props;
     const { initialized } = settings;
     if (initialized) {
-      commitList.fetchFileList();
-      fileManager.loadBranchNames();
+      // TODO: Check if branch list is not empty and one of them is selected
+      // commitList.fetchFileList();
     }
   }
 
@@ -36,22 +38,14 @@ class CommitsView extends Component {
   };
 
   render() {
-    const { commitList, router, fileManager } = this.props;
-    const {
-      loading,
-      createNew,
-      fileList,
-      fileListGroups,
-      defaultValue
-    } = commitList;
+    const { commitList, router, fileManager, settings } = this.props;
+    const { loading, loadingFiles, createNew, fileList, fileListGroups } = commitList;
+    const { currentBranch, branchList } = settings;
+    const { setBranch } = settings;
     return (
       <MainContainer>
         <a id="gh-copy-code-injector" style={{ display: "none" }} />
-        <textarea
-          readOnly
-          id="gh-code-replicator"
-          style={{ display: "none" }}
-        />
+        <textarea readOnly id="gh-code-replicator" style={{ display: "none" }} />
         <SectionHeader>
           <Title>Commits</Title>
           <Action
@@ -61,27 +55,30 @@ class CommitsView extends Component {
             }}
           />
         </SectionHeader>
-        {fileList.length > 0 && (
-          <SelectContainer>
-            <Select
-              value={{
-                value: fileManager.filename,
-                label: fileManager.filename
-              }}
-              isSearchable={true}
-              options={fileListGroups}
-              width={"100%"}
-              onChange={({ value }) => {
-                fileManager.updateFilename(value);
-              }}
-            />
-          </SelectContainer>
+
+        <BranchSelector/>
+
+        {loadingFiles ? (
+          <p>Loading files, please wait...</p>
+        ) : (
+          fileList.length > 0 && (
+            <SelectContainer>
+              <Select
+                value={{
+                  value: fileManager.filename,
+                  label: fileManager.filename
+                }}
+                isSearchable={true}
+                options={fileListGroups}
+                width={"100%"}
+                onChange={({ value }) => {
+                  fileManager.updateFilename(value);
+                }}
+              />
+            </SelectContainer>
+          )
         )}
-        <NewCommit
-          createNew={createNew}
-          getCode={getCode}
-          getBranch={getBranch}
-        />
+        <NewCommit createNew={createNew} getCode={getCode} getBranch={getBranch} />
         <CommitsContainer>
           {loading ? (
             <BoxContainer>
@@ -99,6 +96,4 @@ class CommitsView extends Component {
   }
 }
 
-export default inject("commitList", "router", "settings", "fileManager")(
-  observer(CommitsView)
-);
+export default inject("commitList", "router", "settings", "fileManager")(observer(CommitsView));

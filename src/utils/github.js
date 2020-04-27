@@ -43,8 +43,13 @@ export const getBranchUrl = branch => {
 };
 
 export const getResourceUrl = (resourceName, repo, params = {}) => {
-  const { repoOwner, repoName } = repo;
-  const baseUrl = `https://${GIT_API}${repoOwner}/${repoName}`;
+  let baseUrl = "";
+  if (typeof repo === "string") {
+    baseUrl = repo;
+  } else {
+    const { repoOwner, repoName } = repo;
+    baseUrl = `https://${GIT_API}${repoOwner}/${repoName}`;
+  }
   const { filename, sha, branchSha, ref = "master" } = params;
 
   switch (resourceName) {

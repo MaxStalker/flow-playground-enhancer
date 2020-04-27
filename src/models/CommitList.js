@@ -9,7 +9,7 @@ import {
   getBranchData,
   getCommitBySha,
   getFileContents,
-  updateRef,
+  updateRef
 } from "../utils/github";
 import { settings } from "./Settings";
 import { fileManager } from "./FileManager";
@@ -20,21 +20,21 @@ export const CommitList = types
   .model({
     commits: types.array(Commit),
     loading: types.boolean,
+    loadingFiles: types.boolean,
     cadenceFiles: types.array(FileRef),
-    firstLoad: types.boolean,
+    firstLoad: types.boolean
   })
-  .actions((self) => ({
+  .actions(self => ({
     fetchList: flow(function* (optionalName) {
       // TODO: Check that branch value is not empty,
       //  so we won't fetch list for not saved playground
-      // Or we can fetch a list of available branches and if current one
-      // is not present there, then we show button to create new branch
+      //  Or we can fetch a list of available branches and if current one
+      //  is not present there, then we show button to create new branch
 
       self.loading = true;
 
-      const { repoName, repoOwner, token } = settings;
-      const { branch, filename } = fileManager;
-      const repo = { repoName, repoOwner };
+      const { repo, token, branch } = settings;
+      const { filename } = fileManager;
 
       self.checkFilename(filename);
 
@@ -51,17 +51,16 @@ export const CommitList = types
         branchSha = branchData.object.sha;
       }
 
-      const response = yield getBranchCommits(
-        token,
-        { repoName, repoOwner },
-        { branchSha: branch, filename: fetchFileName }
-      );
+      const response = yield getBranchCommits(token, repo, {
+        branchSha: branch,
+        filename: fetchFileName
+      });
 
       self.commits = response.map(({ sha, commit }) => {
         return Commit.create({
           hash: sha,
           message: commit.message,
-          date: commit.committer.date,
+          date: commit.committer.date
         });
       });
 
@@ -69,21 +68,20 @@ export const CommitList = types
     }),
     initNewBranch: flow(function* () {
       // TODO: We made a copy to master, but not new empty branch...
-      const { repoName, repoOwner, token } = settings;
+      const { repo, token } = settings;
       const { branch } = fileManager;
-      const repo = { repoName, repoOwner };
 
       const masterData = yield getBranchData(token, repo);
       const masterSha = masterData.object.sha;
 
       const lastCommit = yield getCommitBySha(token, repo, {
-        sha: masterSha,
+        sha: masterSha
       });
 
       const ref = `refs/heads/${branch}`;
       const newBranchRef = yield createBranch(token, repo, {
         sha: lastCommit.sha,
-        ref,
+        ref
       });
 
       const newBranchSha = newBranchRef.object.sha;
@@ -96,12 +94,7 @@ export const CommitList = types
       const path = "README.md";
 
       // Commit README.md file here
-      const readmeCommit = yield self.commitFile(
-        message,
-        content,
-        path,
-        branch
-      );
+      const readmeCommit = yield self.commitFile(message, content, path, branch);
     }),
     createNew: flow(function* (message, code, callback) {
       /* We can create commit here, so it will be shown in UI
@@ -109,8 +102,8 @@ export const CommitList = types
         message
       });
       */
-
-      const { branch, filename } = fileManager;
+      const { branch } = settings;
+      const { filename } = fileManager;
       // Commit new file to repository
       const commit = yield self.commitFile(message, code, filename, branch);
 
@@ -118,7 +111,7 @@ export const CommitList = types
         hash: commit.sha,
         date: commit.committer.date,
         message: message, // TODO: get message from response...
-        code,
+        code
       });
 
       self.commits = [newCommitModel, ...self.commits];
@@ -126,14 +119,9 @@ export const CommitList = types
     }),
     commitFile: flow(function* (message, content, path, branch) {
       // we need to return commit from here
-      const notEmptyMessage =
-        message.length > 0 ? message : new Date().toISOString();
+      const notEmptyMessage = message.length > 0 ? message : new Date().toISOString();
 
-      const { token, repoName, repoOwner } = settings;
-      const repo = {
-        repoName,
-        repoOwner,
-      };
+      const { token, repo } = settings;
 
       /*
       let lastNodeSha = null;
@@ -148,21 +136,21 @@ export const CommitList = types
       const lastNodeSha = branchData.object.sha;
 
       const lastCommit = yield getCommitBySha(token, repo, {
-        sha: lastNodeSha,
+        sha: lastNodeSha
       });
       const prevSha = lastCommit.sha;
 
       const newTree = yield createCommitNode(token, repo, {
         prevSha,
         path,
-        content,
+        content
       });
       const commitSha = newTree.sha;
 
       const commit = yield createCommit(token, repo, {
         prevSha,
         commitSha,
-        message: notEmptyMessage,
+        message: notEmptyMessage
       });
 
       console.log({ newSha: commit.sha });
@@ -172,7 +160,7 @@ export const CommitList = types
 
         const result = yield updateRef(token, repo, {
           ref: branch,
-          newCommitSha: commit.sha,
+          newCommitSha: commit.sha
         });
 
         console.log({ result });
@@ -182,25 +170,27 @@ export const CommitList = types
       return commit;
     }),
     fetchFileList: flow(function* () {
-      const { branch } = fileManager;
-      const { repoName, repoOwner, token } = settings;
-      const repo = { repoName, repoOwner };
-
+      self.loadingFiles = true;
+      const { branch, repo, token } = settings;
       const branchFiles = yield getFileContents(token, repo, {
         ref: branch,
-        filename: "",
+        filename: ""
       });
 
+      // Clear file list
+      self.cadenceFiles = [];
       for (let i = 0; i < branchFiles.length; i++) {
         const file = branchFiles[i];
         if (file.name.includes(".cdc")) {
           self.cadenceFiles.push(
             FileRef.create({
-              name: file.name,
+              name: file.name
             })
           );
         }
       }
+
+      self.loadingFiles = false;
 
       if (self.cadenceFiles.length > 0 && self.firstLoad) {
         const fileName = self.cadenceFiles[0].name;
@@ -208,26 +198,26 @@ export const CommitList = types
         self.fetchList(fileName);
       }
     }),
-    checkFilename: (filename) => {
-      if (!self.cadenceFiles.find((item) => item.name === filename)) {
+    checkFilename: filename => {
+      if (!self.cadenceFiles.find(item => item.name === filename)) {
         self.cadenceFiles.push(
           FileRef.create({
-            name: filename,
+            name: filename
           })
         );
       }
-    },
+    }
   }))
-  .views((self) => ({
+  .views(self => ({
     get fileList() {
       return self.cadenceFiles
         .sort((a, b) => {
           return a > b;
         })
-        .map((file) => {
+        .map(file => {
           return {
             value: file.name,
-            label: file.name,
+            label: file.name
           };
         });
     },
@@ -251,34 +241,35 @@ export const CommitList = types
         [
           {
             label: "Contracts",
-            options: [],
+            options: []
           },
           {
             label: "Transactions",
-            options: [],
+            options: []
           },
           {
             label: "Scripts",
-            options: [],
+            options: []
           },
           {
             label: "Custom",
-            options: [],
-          },
+            options: []
+          }
         ]
       );
     },
-    get defaultValue(){
+    get defaultValue() {
       return {
         value: fileManager.filename,
-        label: fileManager.filename,
-      }
+        label: fileManager.filename
+      };
     }
   }));
 
 export const commitList = CommitList.create({
   commits: [],
   loading: false,
+  loadingFiles: false,
   cadenceFiles: [],
-  firstLoad: true,
+  firstLoad: true
 });
