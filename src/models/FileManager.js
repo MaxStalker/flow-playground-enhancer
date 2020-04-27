@@ -1,12 +1,20 @@
-import { types } from "mobx-state-tree";
+import { flow, types } from "mobx-state-tree";
+import { getBranchList, getFileContents } from "../utils/github";
+import { settings } from "./Settings";
+
+const BranchRef = types.model({
+  id: types.identifier,
+  name: types.string
+});
 
 export const FileManager = types
   .model({
     branch: types.string,
+    branches: types.map(BranchRef),
     filename: types.string,
-    index: types.number,
+    index: types.number
   })
-  .actions((self) => ({
+  .actions(self => ({
     afterCreate() {
       const pathname = location.pathname.slice(1);
 
@@ -51,15 +59,36 @@ export const FileManager = types
       ``;
       self.index = newIndex;
     },
+    loadBranchNames: flow(function*() {
+      const { token, repoOwner, repoName } = settings;
+      const repo = { repoOwner, repoName };
+
+      const branchNames = yield getFileContents(token, repo, {
+        filename: "branches.json"
+      });
+      const branchesData = JSON.parse(atob(branchNames.content));
+      console.log({ branchesData });
+
+      const branchList = yield getBranchList(token, repo, "playground");
+      for (let i = 0; i < branchList.length; i++) {
+        const branch = branchList[i];
+        const branchId = branch.ref.split("/")[3];
+        const label = branchesData[branchId] || branchId;
+        self.branches.put({ id: branchId, name: label });
+      }
+    })
   }))
-  .views((self) => ({
+  .views(self => ({
     get withName() {
       return self.branch.length > 0;
     },
+    get branchList(){
+      return self.branches.
+    }
   }));
 
 export const fileManager = FileManager.create({
   branch: "",
   filename: "contract-001.cdc",
-  index: 0,
+  index: 0
 });
