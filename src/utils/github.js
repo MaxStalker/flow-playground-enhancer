@@ -3,15 +3,15 @@ export const GIT_API = "api.github.com/repos/";
 export const getData = async (url, token) => {
   const response = await fetch(url, {
     headers: {
-      Authorization: `token ${token}`,
-    },
+      Authorization: `token ${token}`
+    }
   });
 
   if (response.status < 220) {
     return response.json();
   } else {
     return {
-      status: response.status,
+      status: response.status
     };
   }
 };
@@ -21,8 +21,8 @@ export const postData = async (url, token, data) => {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
-      Authorization: `token ${token}`,
-    },
+      Authorization: `token ${token}`
+    }
   });
   return response.json();
 };
@@ -32,13 +32,13 @@ export const patch = async (url, token, data) => {
     method: "PATCH",
     body: JSON.stringify(data),
     headers: {
-      Authorization: `token ${token}`,
-    },
+      Authorization: `token ${token}`
+    }
   });
   return response.json();
 };
 
-export const getBranchUrl = (branch) => {
+export const getBranchUrl = branch => {
   return `/refs/heads/${branch || "master"}`;
 };
 
@@ -74,9 +74,17 @@ export const getResourceUrl = (resourceName, repo, params = {}) => {
     case "newBranch":
       return `${baseUrl}/git/refs`;
 
+    case "matchingRefs":
+      return `${baseUrl}/git/matching-refs/heads/${ref}`;
+
     default:
       return "";
   }
+};
+
+export const getBranchList = async (token, repo, branch = "master") => {
+  const url = getResourceUrl("matchingRefs", repo, { ref: branch });
+  return getData(url, token);
 };
 
 export const getBranchData = async (token, repo, branch = "master") => {
@@ -109,8 +117,8 @@ export const createCommitNode = async (token, repo, params) => {
         path,
         content,
         mode: "100644"
-      },
-    ],
+      }
+    ]
   };
   const url = getResourceUrl("trees", repo);
   return await postData(url, token, data);
@@ -122,7 +130,7 @@ export const createCommit = async (token, repo, params) => {
   const data = {
     parents: [prevSha],
     tree: commitSha,
-    message,
+    message
   };
   return postData(url, token, data);
 };
@@ -132,7 +140,7 @@ export const updateRef = async (token, repo, params) => {
   const url = getResourceUrl("branchHead", repo, params);
   const data = {
     sha: newCommitSha,
-    force: true,
+    force: true
   };
   return patch(url, token, data);
 };

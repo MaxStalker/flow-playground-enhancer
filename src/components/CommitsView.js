@@ -8,7 +8,7 @@ import {
   SectionHeader,
   SelectContainer,
   Title,
-  Empty,
+  Empty
 } from "./styles";
 import { Action, Spinner } from "./Icons";
 import NewCommit, { BlueText, BoxContainer, InputBlock } from "./NewCommit";
@@ -16,17 +16,18 @@ import { getBranch, getCode } from "../utils/playground";
 
 class CommitsView extends Component {
   async componentDidMount() {
-    const { commitList, settings } = this.props;
+    const { commitList, settings, fileManager } = this.props;
     const { initialized } = settings;
     if (initialized) {
-      await commitList.fetchFileList();
+      commitList.fetchFileList();
+      fileManager.loadBranchNames();
     }
   }
 
   showCommits = () => {
     const { commitList } = this.props;
     return commitList.commits.length > 0 ? (
-      commitList.commits.map((commit) => {
+      commitList.commits.map(commit => {
         return <Commit key={commit.hash} commit={commit} />;
       })
     ) : (
@@ -41,7 +42,7 @@ class CommitsView extends Component {
       createNew,
       fileList,
       fileListGroups,
-      defaultValue,
+      defaultValue
     } = commitList;
     return (
       <MainContainer>
@@ -65,7 +66,7 @@ class CommitsView extends Component {
             <Select
               value={{
                 value: fileManager.filename,
-                label: fileManager.filename,
+                label: fileManager.filename
               }}
               isSearchable={true}
               options={fileListGroups}
@@ -98,9 +99,6 @@ class CommitsView extends Component {
   }
 }
 
-export default inject(
-  "commitList",
-  "router",
-  "settings",
-  "fileManager"
-)(observer(CommitsView));
+export default inject("commitList", "router", "settings", "fileManager")(
+  observer(CommitsView)
+);
