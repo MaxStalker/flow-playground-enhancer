@@ -29,4 +29,8 @@ onPatch(store, (action) => {
   if (path === "/settings/branchName"){
     commitList.fetchFileList();
   }
+
+  if(path === "/settings/repoUrl"){
+    settings.loadBranchNames();
+  }
 });
