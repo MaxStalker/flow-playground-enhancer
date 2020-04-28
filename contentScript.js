@@ -1,5 +1,4 @@
 import { initGitInterface } from "./git-interface";
-import { fileManager } from "./src/models/FileManager";
 import "./setImmediate";
 
 const log = (...args) => console.log("Flow Theme:", ...args);
@@ -160,7 +159,6 @@ function upgradeTransactionLog() {
           }
         }
 
-        fileManager.setFilename(tag, activeIndex + 1);
       }
     },
     true

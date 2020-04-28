@@ -6,10 +6,12 @@ import { GreenButton } from "../Buttons/BasicButton";
 import { ButtonIcon } from "../Icons";
 import { controlHeight, selectStyles } from "../shared";
 import NewFile from "../NewFile";
+import {set} from "mobx";
 
 const FileSelector = props => {
-  const { commitList, fileManager } = props;
+  const { commitList, fileManager, settings } = props;
   const { loadingFiles, fileList, fileListGroups } = commitList;
+  const { branchList } = settings;
 
   // State
   const [mode, setMode] = useState("SHOW");
@@ -17,6 +19,10 @@ const FileSelector = props => {
   // Actions
   const toggleEdit = () => setMode("EDIT");
   const toggleShow = () => setMode("SHOW");
+
+  if (branchList.length === 0){
+    return null
+  }
 
   if (loadingFiles) {
     return <p>Loading files, please wait...</p>;
@@ -27,7 +33,7 @@ const FileSelector = props => {
       {fileList.length > 0 ? (
         <TwoItems>
           <InputBlock mb={0}>
-            <Label>Active File</Label>
+            <Label>File:</Label>
             <Select
               value={{
                 value: fileManager.filename,
@@ -59,4 +65,4 @@ const FileSelector = props => {
   );
 };
 
-export default inject("commitList", "fileManager")(observer(FileSelector));
+export default inject("settings", "commitList", "fileManager")(observer(FileSelector));

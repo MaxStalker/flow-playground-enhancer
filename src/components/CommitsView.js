@@ -1,18 +1,12 @@
 import React, { Component } from "react";
 import { observer, inject } from "mobx-react";
 import Commit from "./Commit";
-import {
-  CommitsContainer,
-  MainContainer,
-  SectionHeader,
-  Title,
-  Empty
-} from "./styles";
+import { CommitsContainer, MainContainer, SectionHeader, Title, Empty } from "./styles";
 import { Action, Spinner } from "./Icons";
 import NewCommit, { BlueText, BoxContainer } from "./NewCommit";
 import { getBranch, getCode } from "../utils/playground";
 import { settings } from "../models/Settings";
-import BranchSelector from "./BranchSelector"
+import BranchSelector from "./BranchSelector";
 import FileSelector from "./FileSelector";
 
 class CommitsView extends Component {
@@ -47,26 +41,29 @@ class CommitsView extends Component {
           />
         </SectionHeader>
 
-        <BranchSelector/>
-        <FileSelector/>
+        <BranchSelector />
+        <FileSelector />
 
-        <SectionHeader>
-          <Title>Commits</Title>
-        </SectionHeader>
-
-        <NewCommit createNew={createNew} getCode={getCode} getBranch={getBranch} />
-        <CommitsContainer>
-          {loading ? (
-            <BoxContainer>
-              <BlueText>
-                <Spinner />
-                <p>Loading commits...</p>
-              </BlueText>
-            </BoxContainer>
-          ) : (
-            this.showCommits()
-          )}
-        </CommitsContainer>
+        {fileList.length > 0 && (
+          <>
+            <SectionHeader>
+              <Title>Commits</Title>
+            </SectionHeader>
+            <NewCommit createNew={createNew} getCode={getCode} getBranch={getBranch} />
+            <CommitsContainer>
+              {loading ? (
+                <BoxContainer>
+                  <BlueText>
+                    <Spinner />
+                    <p>Loading commits...</p>
+                  </BlueText>
+                </BoxContainer>
+              ) : (
+                this.showCommits()
+              )}
+            </CommitsContainer>
+          </>
+        )}
       </MainContainer>
     );
   }

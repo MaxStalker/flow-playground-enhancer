@@ -28,7 +28,7 @@ const BranchSelector = props => {
       {branchList.length > 0 ? (
         <TwoItems>
           <InputBlock mb={0}>
-            <Label>Active Branch</Label>
+            <Label>Branch:</Label>
             <Select
               isSearchable={true}
               width={"100%"}

@@ -207,8 +207,9 @@ export const CommitList = types
       if (self.cadenceFiles.length > 0 && self.firstLoad) {
         console.log("Fetch commits?", self.cadenceFiles.length);
         const fileName = self.cadenceFiles[0].name;
+        fileManager.updateFilename(fileName);
         self.firstLoad = false;
-        self.fetchList(fileName);
+        // self.fetchList(fileName);
       }
 
       if ( self.cadenceFiles.length === 0){
