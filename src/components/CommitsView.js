@@ -15,6 +15,7 @@ import NewCommit, { BlueText, BoxContainer, InputBlock, Label } from "./NewCommi
 import { getBranch, getCode } from "../utils/playground";
 import { settings } from "../models/Settings";
 import BranchSelector from "./BranchSelector"
+import FileSelector from "./FileSelector";
 
 class CommitsView extends Component {
   async componentDidMount() {
@@ -57,6 +58,7 @@ class CommitsView extends Component {
         </SectionHeader>
 
         <BranchSelector/>
+        <FileSelector/>
 
         {loadingFiles ? (
           <p>Loading files, please wait...</p>

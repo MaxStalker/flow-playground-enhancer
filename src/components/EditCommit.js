@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { inject, observer } from "mobx-react";
 import { GreenButton, GreyButton } from "./Buttons/BasicButton";
 import {
@@ -15,6 +15,8 @@ class EditCommit extends Component {
   constructor(props) {
     super();
     memoIndex = props.fileManager.index;
+
+    this.input = createRef();
 
     this.state = {
       message: "",
@@ -36,6 +38,7 @@ class EditCommit extends Component {
   };
 
   componentDidMount() {
+    this.input.current.focus();
     this.getCode();
   }
 
@@ -67,6 +70,7 @@ class EditCommit extends Component {
         <InputBlock mb="20px">
           <Label>Commit Message:</Label>
           <Input
+            ref={this.input}
             onChange={this.onChange}
             value={message}
             placeholder={"Default: ISO timestamp"}

@@ -54,7 +54,7 @@ export const Settings = types
         self.branches.push(name);
       }
 
-      if (branchList.length > 0) {
+      if (self.branches.length > 0) {
         // In case branch was deleted outside of UI
         const branchExists = self.branches.includes(self.branchName);
         if (self.branchName === "" || !branchExists) {

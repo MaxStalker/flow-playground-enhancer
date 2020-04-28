@@ -1,35 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
 import { observer, inject } from "mobx-react";
-import { BoxContainer, ButtonArea, Input, InputBlock, Label } from "./NewCommit";
 import { GreenButton, GreyButton } from "./Buttons/BasicButton";
+import { BoxContainer, ButtonArea, Input, InputBlock, Label } from "./NewCommit";
+import { Error } from "./NewBranch";
+import {getCode} from "../utils/playground";
 
-export const Error = styled.p`
-  font-size: 12px;
-  color: red;
-`;
-
-const validate = (name, { branches }, pristine) => {
-  const branchExists = branches.includes(name);
-  if (branchExists) {
+const validate = (value, data, pristine) => {
+  if (value === "" && !pristine) {
     return {
-      message: "Branch already exists"
+      message: "File name can't be empty"
     };
   }
-
-  if (name === "" && !pristine) {
-    return {
-      message: "Name can't be empty"
-    };
-  }
-
   return {};
 };
 
-const NewBranch = props => {
-  const { cancel, settings } = props;
-  const { branches } = settings;
-  const { createNewBranch, creationMessage, creatingBranch } = settings;
+const NewFile = props => {
+  const { cancel, commitList } = props;
+  const { createNew, commitProcess, isCommiting } = commitList;
   const [name, setName] = useState("");
   const [pristine, setPristine] = useState(true);
 
@@ -45,21 +32,28 @@ const NewBranch = props => {
   };
 
   const submit = () => {
-    createNewBranch(name, cancel);
+    getCode();
+    const replicator = document.getElementById("gh-code-replicator");
+    const code = replicator.value;
+    const fullName = name.includes('.cdc') ? name : `${name}.cdc`;
+    console.log({code});
+    // TODO: BUG - code is not correctly copied
+    createNew("Initial commit", code, cancel, fullName);
+
+    // TODO: fetch updated list after
   };
 
-  const error = validate(name, { branches }, pristine);
+  const error = validate(name, {}, pristine);
   const inputMargin = error ? "0.5rem" : 0;
   return (
     <BoxContainer>
       <InputBlock>
-        <Label>Branch Name</Label>
+        <Label>New File Name</Label>
         <Input ref={inputRef} mb={inputMargin} value={name} onChange={handleChange} />
         {error && <Error>{error.message}</Error>}
       </InputBlock>
-
-      {creatingBranch ? (
-        <p>{creationMessage}</p>
+      {isCommiting ? (
+        <p>{commitProcess}</p>
       ) : (
         <ButtonArea>
           <GreyButton onClick={cancel}>Cancel</GreyButton>
@@ -72,4 +66,4 @@ const NewBranch = props => {
   );
 };
 
-export default inject("settings")(observer(NewBranch));
+export default inject("commitList")(observer(NewFile));

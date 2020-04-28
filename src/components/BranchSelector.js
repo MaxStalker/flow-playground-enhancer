@@ -46,4 +46,4 @@ const BranchSelector = props => {
   );
 };
 
-export default inject("settings", "commitList", "router")(observer(BranchSelector));
+export default inject("settings", "commitList")(observer(BranchSelector));

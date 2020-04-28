@@ -70,6 +70,7 @@ export const InputBlock = styled.div`
 const NewCommit = props => {
   const [mode, selectMode] = useState("NEW");
 
+
   const reset = () => {
     selectMode("NEW");
   };

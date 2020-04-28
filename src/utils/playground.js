@@ -22,10 +22,15 @@ export const writeAction = (index, id) => {
       .find(item => item.uri.path === "${index}")
       .setValue(code);
   })();`;
-}
+};
 
 export const getCode = () => {
-  return "// this is very basic version of contract";
+  const { uri } = document.querySelector("#cadenceEditor .monaco-editor").dataset;
+  const [_, editorIndex] = uri.split("inmemory://model");
+  const copyCode = storeAction(editorIndex, "gh-code-replicator");
+  const injector = document.getElementById("gh-copy-code-injector");
+  injector.href = copyCode;
+  injector.click();
 };
 
 export const getBranch = () => {
