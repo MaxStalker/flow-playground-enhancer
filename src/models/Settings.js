@@ -123,7 +123,7 @@ export const Settings = types
       return `playground/${self.branchName}`;
     },
     get branchList() {
-      console.log(self.branches);
+      // console.log(self.branches);
       return self.branches.map(branchName => {
         return {
           value: branchName,

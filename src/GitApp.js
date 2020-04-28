@@ -14,7 +14,7 @@ class PortalBlock extends React.Component {
   componentDidMount() {
     const { portalId } = this.props;
     const node = document.getElementById(portalId);
-    console.log(node);
+    // console.log(node);
     node.appendChild(this.el);
   }
 

@@ -47,7 +47,7 @@ export const CommitList = types
       let branchSha = null;
       if (branchData.status === 404) {
         let newBranchData = yield self.initNewBranch();
-        console.log({ newBranchData });
+        //console.log({ newBranchData });
         branchSha = newBranchData.object.sha;
       } else {
         branchSha = branchData.object.sha;
@@ -160,10 +160,10 @@ export const CommitList = types
         message: notEmptyMessage
       });
 
-      console.log({ newSha: commit.sha });
+      //console.log({ newSha: commit.sha });
 
       if (commit.sha) {
-        console.log({ commitSha });
+        //console.log({ commitSha });
 
         self.commitProcess = "Update head ref to latest commit";
         const result = yield updateRef(token, repo, {
@@ -171,15 +171,15 @@ export const CommitList = types
           newCommitSha: commit.sha
         });
 
-        console.log({ result });
+        //console.log({ result });
       } else {
-        console.log("Commit SHA was not found");
+        //console.log("Commit SHA was not found");
       }
       self.isCommiting = false;
       return commit;
     }),
     fetchFileList: flow(function* () {
-      console.log("FETCH FILE LIST");
+      //console.log("FETCH FILE LIST");
       self.loadingFiles = true;
       const { branch, repo, token } = settings;
       const branchFiles = yield getFileContents(token, repo, {
@@ -191,7 +191,7 @@ export const CommitList = types
       self.cadenceFiles = [];
       for (let i = 0; i < branchFiles.length; i++) {
         const file = branchFiles[i];
-        console.log({file});
+        //console.log({file});
         if (file.name.includes(".cdc")) {
           self.cadenceFiles.push(
             FileRef.create({
@@ -200,12 +200,12 @@ export const CommitList = types
           );
         }
       }
-      console.log({files: self.cadenceFiles.length});
+      //console.log({files: self.cadenceFiles.length});
 
       self.loadingFiles = false;
 
       if (self.cadenceFiles.length > 0 && self.firstLoad) {
-        console.log("Fetch commits?", self.cadenceFiles.length);
+        //console.log("Fetch commits?", self.cadenceFiles.length);
         const fileName = self.cadenceFiles[0].name;
         fileManager.updateFilename(fileName);
         self.firstLoad = false;
@@ -213,7 +213,7 @@ export const CommitList = types
       }
 
       if ( self.cadenceFiles.length === 0){
-        console.log("NO FILES IN THE BRANCH");
+        //console.log("NO FILES IN THE BRANCH");
         fileManager.updateFilename("");
       }
     }),
