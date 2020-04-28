@@ -27,7 +27,7 @@ export const CommitList = types
     isCommiting: types.boolean
   })
   .actions(self => ({
-    fetchList: flow(function*(optionalName) {
+    fetchList: flow(function* (optionalName) {
       // TODO: Check that branch value is not empty,
       //  so we won't fetch list for not saved playground
       //  Or we can fetch a list of available branches and if current one
@@ -38,7 +38,7 @@ export const CommitList = types
       const { repo, token, branch } = settings;
       const { filename } = fileManager;
 
-      self.checkFilename(filename);
+      // self.checkFilename(filename);
 
       const branchData = yield getBranchData(token, repo, branch);
 
@@ -68,7 +68,7 @@ export const CommitList = types
 
       self.loading = false;
     }),
-    initNewBranch: flow(function*() {
+    initNewBranch: flow(function* () {
       // TODO: We made a copy to master, but not new empty branch...
       const { repo, token } = settings;
       const { branch } = fileManager;
@@ -98,7 +98,7 @@ export const CommitList = types
       // Commit README.md file here
       const readmeCommit = yield self.commitFile(message, content, path, branch);
     }),
-    createNew: flow(function*(message, code, callback, customName) {
+    createNew: flow(function* (message, code, callback, customName) {
       /* We can create commit here, so it will be shown in UI
       const newCommit = Commit.create({
         message
@@ -119,7 +119,7 @@ export const CommitList = types
       self.commits = [newCommitModel, ...self.commits];
       callback();
     }),
-    commitFile: flow(function*(message, content, path, branch) {
+    commitFile: flow(function* (message, content, path, branch) {
       // we need to return commit from here
       const notEmptyMessage = message.length > 0 ? message : new Date().toISOString();
 
@@ -178,7 +178,8 @@ export const CommitList = types
       self.isCommiting = false;
       return commit;
     }),
-    fetchFileList: flow(function*() {
+    fetchFileList: flow(function* () {
+      console.log("FETCH FILE LIST");
       self.loadingFiles = true;
       const { branch, repo, token } = settings;
       const branchFiles = yield getFileContents(token, repo, {
@@ -190,6 +191,7 @@ export const CommitList = types
       self.cadenceFiles = [];
       for (let i = 0; i < branchFiles.length; i++) {
         const file = branchFiles[i];
+        console.log({file});
         if (file.name.includes(".cdc")) {
           self.cadenceFiles.push(
             FileRef.create({
@@ -198,13 +200,20 @@ export const CommitList = types
           );
         }
       }
+      console.log({files: self.cadenceFiles.length});
 
       self.loadingFiles = false;
 
       if (self.cadenceFiles.length > 0 && self.firstLoad) {
+        console.log("Fetch commits?", self.cadenceFiles.length);
         const fileName = self.cadenceFiles[0].name;
         self.firstLoad = false;
         self.fetchList(fileName);
+      }
+
+      if ( self.cadenceFiles.length === 0){
+        console.log("NO FILES IN THE BRANCH");
+        fileManager.updateFilename("");
       }
     }),
     checkFilename: filename => {
@@ -272,6 +281,14 @@ export const CommitList = types
         value: fileManager.filename,
         label: fileManager.filename
       };
+    },
+    filenameExists(fileName) {
+      const noExt = fileName.includes(".cdc") ? fileName.split(".")[0] : fileName;
+      // TODO: Possible to slightly optimize this with for loop and continue
+      return self.cadenceFiles.find(item => {
+        const itemNoExt = item.name.includes(".cdc") ? item.name.split(".")[0] : item.name;
+        return itemNoExt === noExt;
+      });
     }
   }));
 

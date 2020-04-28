@@ -3,9 +3,18 @@ import { observer, inject } from "mobx-react";
 import { GreenButton, GreyButton } from "./Buttons/BasicButton";
 import { BoxContainer, ButtonArea, Input, InputBlock, Label } from "./NewCommit";
 import { Error } from "./NewBranch";
-import {getCode} from "../utils/playground";
+import { getCode } from "../utils/playground";
 
-const validate = (value, data, pristine) => {
+const validate = (value, {filenameExists}, pristine) => {
+  // TODO: check filename with and without extension
+  //  use find or includes maybe?..
+
+  if (filenameExists(value)){
+    return {
+      message: "File with this name already exists"
+    }
+  }
+
   if (value === "" && !pristine) {
     return {
       message: "File name can't be empty"
@@ -15,8 +24,9 @@ const validate = (value, data, pristine) => {
 };
 
 const NewFile = props => {
-  const { cancel, commitList } = props;
+  const { cancel, commitList, fileManager } = props;
   const { createNew, commitProcess, isCommiting } = commitList;
+  const { fetchFileList } = commitList;
   const [name, setName] = useState("");
   const [pristine, setPristine] = useState(true);
 
@@ -33,17 +43,21 @@ const NewFile = props => {
 
   const submit = () => {
     getCode();
-    const replicator = document.getElementById("gh-code-replicator");
-    const code = replicator.value;
-    const fullName = name.includes('.cdc') ? name : `${name}.cdc`;
-    console.log({code});
-    // TODO: BUG - code is not correctly copied
-    createNew("Initial commit", code, cancel, fullName);
 
-    // TODO: fetch updated list after
+    // NOTE: This is hacky, but editor update is differed, so this is the only
+    // solution that I found consistently working
+    setTimeout(async () => {
+      const replicator = document.getElementById("gh-code-replicator");
+      let code = replicator.value;
+      const fullName = name.includes(".cdc") ? name : `${name}.cdc`;
+      await createNew("Initial commit", code, cancel, fullName);
+      await fetchFileList();
+      fileManager.updateFilename(fullName);
+      // TODO: select newly created file
+    }, 100);
   };
 
-  const error = validate(name, {}, pristine);
+  const error = validate(name, commitList, pristine);
   const inputMargin = error ? "0.5rem" : 0;
   return (
     <BoxContainer>
@@ -66,4 +80,4 @@ const NewFile = props => {
   );
 };
 
-export default inject("commitList")(observer(NewFile));
+export default inject("commitList", "fileManager")(observer(NewFile));

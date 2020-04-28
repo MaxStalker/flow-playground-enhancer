@@ -36,10 +36,24 @@ export const SectionHeader = styled.div`
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
+  position: relative;
+/*  &:after{
+    display: block;
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--theme-header-title);
+    right: 2rem;
+    left: 2rem;
+    .with-theme &{
+      border-top: 1px solid var(--theme-header-title); 
+    }
+  }*/
 `;
 
 export const Title = styled.div`
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;

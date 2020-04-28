@@ -5,7 +5,7 @@ import { BoxContainer, InputBlock, Label } from "./NewCommit";
 import { GreenButton } from "./Buttons/BasicButton";
 import NewFile from "./NewFile";
 
-const FileSelector = props => {
+const FileSelectoOldr = props => {
   const { settings } = props;
   // const { currentBranch, branchList, loadingBranches } = settings;
   // const { setBranch } = settings;
@@ -35,4 +35,4 @@ const FileSelector = props => {
   );
 };
 
-export default inject("settings", "commitList")(observer(FileSelector));
+export default inject("settings", "commitList")(observer(FileSelectoOldr));

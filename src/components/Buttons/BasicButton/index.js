@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const BasicButton = styled.button`
   background-color: #00fb83;
-  padding: 12px;
+  padding: ${({ p = "12px" }) => p};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,8 +12,10 @@ const BasicButton = styled.button`
   color: #065630;
   font-weight: 700;
   font-size: ${({ fs = "14px" }) => fs};
-  width: 100%;
   text-align: center;
+  width: 100%;
+  height: ${({ height = "auto" }) => height};
+  box-sizing: border-box;
   &:disabled {
     cursor: not-allowed;
     opacity: 0.3;

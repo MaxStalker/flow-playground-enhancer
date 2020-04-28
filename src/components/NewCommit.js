@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { GreenButton, GreyButton } from "./Buttons/BasicButton";
-import { Spinner } from "./Icons";
+import { ButtonIcon, Spinner } from "./Icons";
 import EditCommit from "./EditCommit";
 
 const Container = styled.div`
@@ -14,6 +14,14 @@ export const BoxContainer = styled.div`
   padding: 0 1rem;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 1rem;
+`;
+
+export const TwoItems = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 16px;
+  align-items: flex-end;
   margin-bottom: 1rem;
 `;
 
@@ -70,7 +78,6 @@ export const InputBlock = styled.div`
 const NewCommit = props => {
   const [mode, selectMode] = useState("NEW");
 
-
   const reset = () => {
     selectMode("NEW");
   };
@@ -86,7 +93,10 @@ const NewCommit = props => {
   const newCommit = () => {
     return (
       <BoxContainer>
-        <GreenButton onClick={showEdit}>Create New Commit</GreenButton>
+        <GreenButton onClick={showEdit}>
+          <ButtonIcon name="new-file" mr="8px" />
+          New Commit
+        </GreenButton>
       </BoxContainer>
     );
   };
