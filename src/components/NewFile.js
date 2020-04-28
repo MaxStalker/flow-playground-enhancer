@@ -51,8 +51,8 @@ const NewFile = props => {
       let code = replicator.value;
       const fullName = name.includes(".cdc") ? name : `${name}.cdc`;
       await createNew("Initial commit", code, cancel, fullName);
-      await fetchFileList();
       fileManager.updateFilename(fullName);
+      await fetchFileList();
       // TODO: select newly created file
     }, 100);
   };
