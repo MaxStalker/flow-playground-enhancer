@@ -3,7 +3,24 @@
     "dev": "parcel flow-dark-theme.scss manifest.json popup.html popup.js background.js"
   },
   "devDependencies": {
-    "sass": "^1.26.3",
-    "prettier": "^2.0.2"
+    "@babel/core": "^7.9.0",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-app": "^9.1.2",
+    "babel-preset-stage-0": "^6.24.1",
+    "prettier": "^2.0.2",
+    "sass": "^1.26.3"
+  },
+  "dependencies": {
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
+    "mobx-state-tree": "^3.15.0",
+    "react": ">= 16.8.0",
+    "react-dom": ">= 16.8.0",
+    "react-is": ">= 16.8.0",
+    "react-select": "^3.1.0",
+    "styled-components": "^5.1.0"
   }
 }
